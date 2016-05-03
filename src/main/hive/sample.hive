@@ -1,0 +1,21 @@
+USE DEFAULT;
+set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
+set mapreduce.job.maps=2;
+set mapreduce.job.reduces=2;
+set hive.stats.autogather=false;
+
+DROP TABLE emrusers;
+CREATE EXTERNAL TABLE emrusers (
+  userid INT,
+  movieid INT,
+  rating INT,
+  unixtime STRING )
+ ROW FORMAT DELIMITED
+ FIELDS TERMINATED BY '\t'
+ LOCATION '${hiveconf:inputPath}';
+
+SELECT COUNT(*) FROM emrusers;
+
+SELECT * from emrusers limit 100;
+
+SELECT movieid,count(userid) as usercount from emrusers group by movieid order by usercount desc limit 50;
