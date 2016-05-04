@@ -12,13 +12,13 @@
 
     <properties>
         <spark.version>1.6.1</spark.version>
-        <emr.version>1.1.2-SNAPSHOT</emr.version>
+        <emr.version>1.1.2</emr.version>
         <oss.sdk.version>2.2.0</oss.sdk.version>
         <odps.version>0.17.3</odps.version>
         <loghubb.client.version>0.6.3</loghubb.client.version>
         <ons.version>1.1.8</ons.version>
         <rocketmq.version>3.2.5</rocketmq.version>
-        <hadoop.version>2.6.0</hadoop.version>
+        <hadoop.version>2.2.0</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
         <fastjson.version>1.1.38</fastjson.version>
