@@ -6,7 +6,7 @@
 
     <groupId>com.aliyun.emr</groupId>
     <artifactId>examples</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <name>EMR Examples</name>
 
@@ -18,7 +18,7 @@
         <loghubb.client.version>0.6.3</loghubb.client.version>
         <ons.version>1.1.8</ons.version>
         <rocketmq.version>3.2.5</rocketmq.version>
-        <hadoop.version>2.6.0</hadoop.version>
+        <hadoop.version>2.2.0</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
         <fastjson.version>1.1.38</fastjson.version>
@@ -226,6 +226,8 @@
                             <include>com.aliyun.odps:odps-sdk-core</include>
                             <include>com.aliyun.odps:odps-sdk-commons</include>
                             <include>com.aliyun.oss:aliyun-sdk-oss</include>
+                            <include>com.aliyun.openservices:aliyun-log</include>
+                            <include>com.aliyun.openservices:loghub-client-lib</include>
                             <include>com.aliyun.openservices:ons-client</include>
                             <include>com.aliyun.openservices:ons-api</include>
                             <include>com.alibaba.rocketmq:rocketmq-client</include>

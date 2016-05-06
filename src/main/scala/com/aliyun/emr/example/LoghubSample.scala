@@ -40,6 +40,7 @@ object LoghubSample {
     val batchInterval = Milliseconds(args(6).toInt * 1000)
 
     val conf = new SparkConf().setAppName("Loghub Sample")
+//    conf.setMaster("local").setAppName("test")
     val ssc = new StreamingContext(conf, batchInterval)
     val loghubStream = LoghubUtils.createStream(
       ssc,
@@ -47,6 +48,7 @@ object LoghubSample {
       logStore,
       loghubGroupName,
       endpoint,
+      1,
       accessKeyId,
       accessKeySecret,
       StorageLevel.MEMORY_AND_DISK)
