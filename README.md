@@ -23,6 +23,10 @@
 - MNSSample：MNS使用示例
 - LoghubSample：Loghub使用示例 
 
+#### PySpark
+
+- WordCount: 单词统计
+
 ## 依赖资源
 
 测试数据（data目录下）：
@@ -91,6 +95,12 @@
 	- LinearRegression: `spark-submit --class LinearRegression examples-1.0-SNAPSHOT-shaded.jar <inputPath> <numPartitions>`
 		- inputPath：输入数据
 		- numPartition：输入数据RDD分片数目 
+
+- PySpark
+	- WordCount： `spark-submit wordcount.py <inputPath> <outputPath> <numPartition>`
+		- inputPath： 输入数据路径
+		- outputPath： 输出路径
+		- numPartition： 输入数据RDD分片数目
 
 - Mapreduce
 	- WordCount： `hadoop jar examples-1.0-SNAPSHOT-shaded.jar WordCount -Dwordcount.case.sensitive=true <inputPath> <outputPath> -skip <patternPath>`
