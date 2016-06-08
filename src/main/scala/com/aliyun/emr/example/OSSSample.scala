@@ -18,7 +18,7 @@
 
 package com.aliyun.emr.example
 
-object OSSSample extends RunLocally{
+object OSSSample extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 2) {
       System.err.println(
@@ -30,6 +30,7 @@ object OSSSample extends RunLocally{
           |    numPartitions    the number of RDD partitions.
           |
         """.stripMargin)
+      System.exit(1)
     }
 
     val inputPath = args(0)

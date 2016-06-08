@@ -43,6 +43,7 @@ object ONSSample {
           |    parallelism      The number of receivers.
           |
         """.stripMargin)
+      System.exit(1)
     }
 
     val Array(accessKeyId, accessKeySecret, cId, topic, subExpression, parallelism) = args

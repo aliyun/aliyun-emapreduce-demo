@@ -31,6 +31,7 @@ object SparkWordCount extends RunLocally {
           |    numPartitions    The number of RDD partitions.
           |
         """.stripMargin)
+      System.exit(1)
     }
 
     val inputPath = args(0)
