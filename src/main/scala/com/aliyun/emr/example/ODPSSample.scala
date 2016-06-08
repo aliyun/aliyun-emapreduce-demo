@@ -1,6 +1,4 @@
-package com.aliyun.emr.example
-
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -17,6 +15,9 @@ package com.aliyun.emr.example
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package com.aliyun.emr.example
+
 import com.aliyun.odps.TableSchema
 import com.aliyun.odps.data.Record
 import org.apache.spark.aliyun.odps.OdpsOps
