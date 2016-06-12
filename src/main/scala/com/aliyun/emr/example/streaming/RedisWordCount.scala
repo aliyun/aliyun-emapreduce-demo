@@ -17,19 +17,14 @@
 
 package com.aliyun.emr.example.streaming
 
-import com.aliyun.emr.example.RunLocally
-import org.apache.spark.SparkConf
+import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.storage.StorageLevel
 import com.redislabs.provider.redis._
 
-object RedisWordCount extends RunLocally {
-  var redisHost = ""
-  var redisPort = ""
-  var redisAuth = ""
-
+object RedisWordCount {
   def main(args: Array[String]): Unit = {
-    if (args.length < 9) {
+    if (args.length < 4) {
       System.err.println(
         """Usage: bin/spark-submit --class RedisWordCount examples-1.0-SNAPSHOT-shaded.jar <redisHost> <redisPort>
           |           <redisAuth> <keyName>
@@ -45,22 +40,22 @@ object RedisWordCount extends RunLocally {
       System.exit(1)
     }
 
-    RedisWordCount.redisHost = args(0)
-    RedisWordCount.redisPort = args(1)
-    RedisWordCount.redisAuth = args(2)
+    val redisHost = args(0)
+    val redisPort = args(1)
+    val redisAuth = args(2)
     val keyName = args(3)
 
+    val conf = new SparkConf().setAppName("Redis WordCount").setMaster("local[4]")
+    conf.set("redis.host", redisHost)
+    conf.set("redis.port", redisPort)
+    conf.set("redis.auth", redisAuth)
+    val sc = new SparkContext(conf)
     val ssc = new StreamingContext(sc, Seconds(1))
+
     val redisStream = ssc.createRedisStream(Array(keyName), storageLevel = StorageLevel.MEMORY_AND_DISK_2)
     redisStream.print()
+
+    ssc.start()
     ssc.awaitTermination()
-  }
-
-  override def getAppName: String = "Redis WordCount"
-
-  override def initializeConf(conf: SparkConf): Unit = {
-    conf.set("redis.host", RedisWordCount.redisHost)
-    conf.set("redis.port", RedisWordCount.redisPort)
-    conf.set("redis.auth", RedisWordCount.redisAuth)
   }
 }

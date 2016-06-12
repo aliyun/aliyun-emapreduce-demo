@@ -25,6 +25,8 @@
         <guava.version>11.0.2</guava.version>
         <mysql.connector.version>5.1.34</mysql.connector.version>
         <mongodb.version>0.11.2</mongodb.version>
+        <redis.clients.version>2.7.2</redis.clients.version>
+        <commons.pool2.version>2.0</commons.pool2.version>
     </properties>
 
     <dependencies>
@@ -185,6 +187,18 @@
             <artifactId>spark-mongodb_2.10</artifactId>
             <version>${mongodb.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${redis.clients.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>${commons.pool2.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -256,6 +270,9 @@
                             <include>net.sf.ezmorph:ezmorph</include>
                             <include>commons-validator:commons-validator</include>
                             <include>mysql:mysql-connector-java</include>
+                            <include>com.stratio.datasource:spark-mongodb_2.10</include>
+                            <include>redis.clients:jedis</include>
+                            <include>org.apache.commons:commons-pool2</include>
                         </includes>
                     </artifactSet>
                 </configuration>
