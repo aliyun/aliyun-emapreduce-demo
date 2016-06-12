@@ -28,7 +28,7 @@ object RDSSample2 extends RunLocally {
     if (args.length < 8) {
       System.err.println(
         """Usage: bin/spark-submit --class RDSSample1 examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
-          |       <dbPwd> <dbUrl> <dbPort> <ossPath> <numPartitions>
+          |       <dbPwd> <dbUrl> <dbPort> <inputPath> <numPartitions>
           |
           |Arguments:
           |

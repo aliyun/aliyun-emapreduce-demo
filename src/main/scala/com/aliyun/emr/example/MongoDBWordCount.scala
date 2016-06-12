@@ -25,12 +25,11 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 
-class MongoDBWordCount extends RunLocally {
+object MongoDBWordCount extends RunLocally {
   def main(args: Array[String]): Unit = {
-
     if (args.length < 9) {
       System.err.println(
-        """Usage: bin/spark-submit --class RDSSample1 examples-1.0-SNAPSHOT-shaded.jar <dbName> <dbUrl> <dbPort>
+        """Usage: bin/spark-submit --class MongoDBWordCount examples-1.0-SNAPSHOT-shaded.jar <dbName> <dbUrl> <dbPort>
           |         <collectionName> <sampleRatio> <writeConcern> <splitSize> <splitKey> <inputPath> <numPartitions>
           |
           |Arguments:
