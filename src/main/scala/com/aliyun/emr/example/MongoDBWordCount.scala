@@ -27,17 +27,20 @@ import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructT
 
 object MongoDBWordCount extends RunLocally {
   def main(args: Array[String]): Unit = {
-    if (args.length < 9) {
+    if (args.length < 12) {
       System.err.println(
         """Usage: bin/spark-submit --class MongoDBWordCount examples-1.0-SNAPSHOT-shaded.jar <dbName> <dbUrl> <dbPort>
-          |         <collectionName> <sampleRatio> <writeConcern> <splitSize> <splitKey> <inputPath> <numPartitions>
+          |         <userName> <pwd> <collectionName> <sampleRatio> <writeConcern> <splitSize> <splitKey> <inputPath>
+          |         <numPartitions>
           |
           |Arguments:
           |
           |    dbName          MongoDB database name.
           |    dbUrl           MongoDB database URL.
           |    dbPort          MongoDB database port.
-          |    collectionName  MongoDB collenction name.
+          |    userName        MongoDB database user name.
+          |    pwd             mongoDB database password.
+          |    collectionName  MongoDB collection name.
           |    sampleRatio     MongoDB sample ratio.
           |    writeConcern    MongoDB write concern.
           |    splitSize       MongoDB split size.
@@ -52,13 +55,15 @@ object MongoDBWordCount extends RunLocally {
     val dbName = args(0)
     val dbUrl = args(1)
     val dbPort = args(2)
-    val collectionName = args(3)
-    val sampleRatio = args(4).toFloat
-    val writeConcern = args(5)
-    val splitSize = args(6).toInt
-    val splitKey = args(7)
-    val inputPath = args(8)
-    val numPartitions = args(9).toInt
+    val userName = args(3)
+    val pwd = args(4)
+    val collectionName = args(5)
+    val sampleRatio = args(6).toFloat
+    val writeConcern = args(7)
+    val splitSize = args(8).toInt
+    val splitKey = args(9)
+    val inputPath = args(10)
+    val numPartitions = args(11).toInt
 
     val sqlContext = new SQLContext(sc)
 
@@ -68,10 +73,12 @@ object MongoDBWordCount extends RunLocally {
         StructField("word", StringType) ::
         StructField("count", IntegerType) :: Nil)
 
+    val hosts = dbUrl.split(",").map(e => s"$e:$dbPort").toList
     val df = sqlContext.createDataFrame(counts, schema)
-    val saveConfig = MongodbConfigBuilder(Map(Host -> List(s"$dbUrl:$dbPort"), Database -> dbName,
+    val saveConfig = MongodbConfigBuilder(Map(Host -> hosts, Database -> dbName,
         Collection -> collectionName, SamplingRatio -> sampleRatio, WriteConcern -> writeConcern,
-        SplitSize -> splitSize, SplitKey -> splitKey))
+        SplitSize -> splitSize, SplitKey -> splitKey,
+        Credentials -> List(com.stratio.datasource.mongodb.config.MongodbCredentials(userName, dbName, pwd.toCharArray))))
     df.saveToMongodb(saveConfig.build())
   }
 
