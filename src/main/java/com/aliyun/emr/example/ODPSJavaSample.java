@@ -39,11 +39,11 @@ public class ODPSJavaSample {
         String accessKey = args[1];
 
         //内网环境：http://odps-ext.aliyun-inc.com/api
-        //公网环境：http://odps-ext.aliyun.com/api
+        //公网环境：http://service.odps.aliyun.com/api
         String odpsUrl = args[2];
 
         //内网环境：http://dt-ext.odps.aliyun-inc.com
-        //公网环境：http://dt-ext.odps.aliyun.com
+        //公网环境：http://dt.odps.aliyun.com
         String tunnelUrl = args[3];
         String project = args[4];
         String table = args[5];
