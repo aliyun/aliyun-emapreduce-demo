@@ -27,6 +27,7 @@
         <mongodb.version>0.11.2</mongodb.version>
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
+        <hbase.version>1.1.1</hbase.version>
     </properties>
 
     <dependencies>
@@ -199,6 +200,34 @@
             <artifactId>commons-pool2</artifactId>
             <version>${commons.pool2.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>${hbase.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>jdk.tools</groupId>
+                    <artifactId>jdk.tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-mapreduce-client-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>${hbase.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-protocol</artifactId>
+            <version>${hbase.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -273,6 +302,9 @@
                             <include>com.stratio.datasource:spark-mongodb_2.10</include>
                             <include>redis.clients:jedis</include>
                             <include>org.apache.commons:commons-pool2</include>
+                            <include>org.apache.hbase:hbase-common</include>
+                            <include>org.apache.hbase:hbase-client</include>
+                            <include>org.apache.hbase:hbase-protocol</include>
                         </includes>
                     </artifactSet>
                 </configuration>
