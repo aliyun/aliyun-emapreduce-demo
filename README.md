@@ -108,6 +108,13 @@
 		- outputPath：输出路径
 		- patternPath：过滤字符文件，可以使用data/patterns.txt
 
+- Hadoop Streaming
+	- WordCount： `hadoop jar /usr/lib/hadoop-current/share/hadoop/tools/lib/hadoop-streaming-*.jar -file <mapperPyFile> -mapper mapper.py -file <reducerPyFile> -reducer reducer.py -input <inputPath> -output <outputPath>`
+		- mapperPyFile mapper文件，[mapper样例](/src/main/python/streaming/wcmapper.py)
+		- reducerPyFile reducer文件, [reducer样例](/src/main/python/streaming/wcreducer.py)
+		- inputPath：输入数据路径
+		- outputPath：输出路径
+
 - Hive
 	- `hive -f sample.hive -hiveconf inputPath=<inputPath>`
 		- inputPath：输入数据路径
