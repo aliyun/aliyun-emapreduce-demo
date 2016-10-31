@@ -151,6 +151,12 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-mapreduce-client-core</artifactId>
             <version>${hadoop.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>jdk.tools</groupId>
+                    <artifactId>jdk.tools</artifactId>
+                </exclusion>
+            </exclusions>     
         </dependency>
 
         <dependency>
@@ -228,6 +234,30 @@
             <artifactId>hbase-protocol</artifactId>
             <version>${hbase.version}</version>
         </dependency>
+             
+        <dependency>
+            <groupId>com.aliyun.mns</groupId>
+            <artifactId>aliyun-sdk-mns</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpasyncclient</artifactId>
+            <version>4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore-nio</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.1</version>
+        </dependency>     
     </dependencies>
 
     <build>
@@ -287,6 +317,7 @@
                             <include>com.aliyun.openservices:loghub-client-lib</include>
                             <include>com.aliyun.openservices:ons-client</include>
                             <include>com.aliyun.openservices:ons-api</include>
+                            <include>com.aliyun.mns:aliyun-sdk-mns</include>     
                             <include>com.alibaba.rocketmq:rocketmq-client</include>
                             <include>com.alibaba.rocketmq:rocketmq-common</include>
                             <include>com.alibaba.rocketmq:rocketmq-remoting</include>
@@ -305,6 +336,9 @@
                             <include>org.apache.hbase:hbase-common</include>
                             <include>org.apache.hbase:hbase-client</include>
                             <include>org.apache.hbase:hbase-protocol</include>
+                            <include>org.apache.httpcomponents:httpasyncclient</include>
+                            <include>org.apache.httpcomponents:httpcore-nio</include>
+                            <include>org.apache.httpcomponents:httpcore</include>    
                         </includes>
                     </artifactSet>
                 </configuration>
