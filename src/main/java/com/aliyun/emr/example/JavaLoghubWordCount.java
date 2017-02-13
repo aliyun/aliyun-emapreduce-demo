@@ -37,7 +37,7 @@ public class JavaLoghubWordCount {
   private static final Pattern SPACE = Pattern.compile(" ");
 
   public static void main(String[] args) {
-    if (args.length < 7) {
+    if (args.length < 6) {
       System.err.println("Usage: bin/spark-submit --class JavaLoghubWordCount " +
           "examples-1.0-SNAPSHOT-shaded.jar <sls project> <sls logstore> <loghub group name> " +
           "<sls endpoint> <access key id> <access key secret>");
