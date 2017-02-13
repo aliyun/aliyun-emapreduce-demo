@@ -26,7 +26,8 @@ object LoghubSample {
   def main(args: Array[String]): Unit = {
     if (args.length < 7) {
       System.err.println(
-        """Usage: bin/spark-submit --class LoghubSample examples-1.0-SNAPSHOT-shaded.jar <sls project> <sls logstore> <loghub group name> <sls endpoint>
+        """Usage: bin/spark-submit --class LoghubSample examples-1.0-SNAPSHOT-shaded.jar
+          |         <sls project> <sls logstore> <loghub group name> <sls endpoint>
           |         <access key id> <access key secret> <batch interval seconds>
         """.stripMargin)
       System.exit(1)

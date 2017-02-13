@@ -40,8 +40,9 @@ public class JavaONSWordCount {
 
     public static void main(String[] args) {
         if (args.length < 5) {
-            System.err.println("Usage: bin/spark-submit --class ONSSample examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> " +
-                    "<accessKeySecret> <consumerId> <topic> <subExpression>");
+            System.err.println("Usage: bin/spark-submit --class ONSSample " +
+                "examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> " +
+                "<consumerId> <topic> <subExpression>");
             System.exit(1);
         }
 
