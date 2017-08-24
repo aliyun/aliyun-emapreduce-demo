@@ -17,7 +17,6 @@
 
 package com.aliyun.emr.example;
 
-import com.google.common.collect.Lists;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function;
@@ -31,12 +30,14 @@ import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import scala.Tuple2;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class JavaLoghubWordCount {
   private static final Pattern SPACE = Pattern.compile(" ");
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     if (args.length < 6) {
       System.err.println("Usage: bin/spark-submit --class JavaLoghubWordCount " +
           "examples-1.0-SNAPSHOT-shaded.jar <sls project> <sls logstore> <loghub group name> " +
@@ -71,8 +72,8 @@ public class JavaLoghubWordCount {
       }
     }).flatMap(new FlatMapFunction<String, String>() {
       @Override
-      public Iterable<String> call(String x) {
-        return Lists.newArrayList(SPACE.split(x));
+      public Iterator<String> call(String s) {
+        return Arrays.asList(SPACE.split(s)).iterator();
       }
     });
     JavaPairDStream<String, Integer> wordCounts = words.mapToPair(

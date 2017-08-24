@@ -29,12 +29,13 @@ import org.apache.spark.streaming.aliyun.mns.MnsUtils;
 import org.apache.spark.streaming.api.java.*;
 import scala.Tuple2;
 
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class JavaMNSWordCount {
     private static final Pattern SPACE = Pattern.compile(" ");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         if (args.length < 4) {
             System.err.println("Usage: bin/spark-submit --class JavaMNSWordCount examples-1.0-SNAPSHOT-shaded.jar <queueName> " +
                     "<accessKeyId> <accessKeySecret> <endpoint>");
@@ -60,8 +61,8 @@ public class JavaMNSWordCount {
             }
         }).flatMap(new FlatMapFunction<String, String>() {
             @Override
-            public Iterable<String> call(String x) {
-                return Lists.newArrayList(SPACE.split(x));
+            public Iterator<String> call(String x) {
+                return Lists.newArrayList(SPACE.split(x)).iterator();
             }
         });
         JavaPairDStream<String, Integer> wordCounts = words.mapToPair(

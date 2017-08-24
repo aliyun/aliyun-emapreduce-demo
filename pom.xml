@@ -85,7 +85,7 @@
             <version>${emr.version}</version>
         </dependency>
 
-        <!-- 支持 MNS、ONS、LogService、MaxCompute数据源 (Spark 1.x环境)-->
+        <!-- 支持 MNS、ONS、LogService、MaxCompute数据源 (Spark 2.x环境)-->
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-mns_2.11</artifactId>

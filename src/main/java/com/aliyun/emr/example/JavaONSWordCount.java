@@ -33,12 +33,13 @@ import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import scala.Tuple2;
 
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class JavaONSWordCount {
     private static final Pattern SPACE = Pattern.compile(" ");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         if (args.length < 5) {
             System.err.println("Usage: bin/spark-submit --class ONSSample " +
                 "examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> " +
@@ -71,8 +72,8 @@ public class JavaONSWordCount {
             }
         }).flatMap(new FlatMapFunction<String, String>() {
             @Override
-            public Iterable<String> call(String x) {
-                return Lists.newArrayList(SPACE.split(x));
+            public Iterator<String> call(String x) {
+                return Lists.newArrayList(SPACE.split(x)).iterator();
             }
         });
         JavaPairDStream<String, Integer> wordCounts = words.mapToPair(
