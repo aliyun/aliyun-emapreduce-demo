@@ -11,17 +11,17 @@
     <name>EMR Examples</name>
 
     <properties>
-        <spark.version>1.6.3</spark.version>
+        <spark.version>2.1.1</spark.version>
         <emr.version>1.4.1</emr.version>
         <oss.sdk.version>2.3.0</oss.sdk.version>
-        <odps.version>0.23.3-public</odps.version>
-        <loghubb.client.version>0.6.5</loghubb.client.version>
-        <ons.version>1.2.6</ons.version>
+        <odps.version>0.24.0-public</odps.version>
+        <loghubb.client.version>0.6.7</loghubb.client.version>
+        <ons.version>1.2.7.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
         <hadoop.version>2.2.0</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
-        <fastjson.version>1.1.38</fastjson.version>
+        <fastjson.version>1.2.23</fastjson.version>
         <guava.version>11.0.2</guava.version>
         <mysql.connector.version>5.1.34</mysql.connector.version>
         <mongodb.version>0.11.2</mongodb.version>
@@ -33,31 +33,31 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.10</artifactId>
+            <artifactId>spark-core_2.11</artifactId>
             <version>${spark.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-mllib_2.10</artifactId>
+            <artifactId>spark-mllib_2.11</artifactId>
             <version>${spark.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_2.10</artifactId>
+            <artifactId>spark-sql_2.11</artifactId>
             <version>${spark.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming_2.10</artifactId>
+            <artifactId>spark-streaming_2.11</artifactId>
             <version>${spark.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-hive_2.10</artifactId>
+            <artifactId>spark-hive_2.11</artifactId>
             <version>${spark.version}</version>
             <exclusions>
                 <exclusion>
@@ -88,25 +88,25 @@
         <!-- 支持 MNS、ONS、LogService、MaxCompute数据源 (Spark 1.x环境)-->
         <dependency>
             <groupId>com.aliyun.emr</groupId>
-            <artifactId>emr-mns_2.10</artifactId>
+            <artifactId>emr-mns_2.11</artifactId>
             <version>${emr.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun.emr</groupId>
-            <artifactId>emr-logservice_2.10</artifactId>
+            <artifactId>emr-logservice_2.11</artifactId>
             <version>${emr.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun.emr</groupId>
-            <artifactId>emr-maxcompute_2.10</artifactId>
+            <artifactId>emr-maxcompute_2.11</artifactId>
             <version>${emr.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun.emr</groupId>
-            <artifactId>emr-ons_2.10</artifactId>
+            <artifactId>emr-ons_2.11</artifactId>
             <version>${emr.version}</version>
         </dependency>
 
@@ -265,7 +265,7 @@
         <dependency>
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
-            <version>1.1.2</version>
+            <version>1.1.8</version>
         </dependency>
 
         <dependency>
@@ -337,10 +337,10 @@
                     <artifactSet>
                         <includes>
                             <include>com.aliyun.emr:emr-tablestore</include>
-                            <include>com.aliyun.emr:emr-mns_2.10</include>
-                            <include>com.aliyun.emr:emr-logservice_2.10</include>
-                            <include>com.aliyun.emr:emr-maxcompute_2.10</include>
-                            <include>com.aliyun.emr:emr-ons_2.10</include>
+                            <include>com.aliyun.emr:emr-mns_2.11</include>
+                            <include>com.aliyun.emr:emr-logservice_2.11</include>
+                            <include>com.aliyun.emr:emr-maxcompute_2.11</include>
+                            <include>com.aliyun.emr:emr-ons_2.11</include>
                             <include>com.aliyun.odps:odps-sdk-core</include>
                             <include>com.aliyun.odps:odps-sdk-commons</include>
                             <include>com.aliyun.oss:aliyun-sdk-oss</include>
