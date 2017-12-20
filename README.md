@@ -1,3 +1,5 @@
+[![Travis](https://travis-ci.org/aliyun/aliyun-emapreduce-demo.svg?branch=master)](https://travis-ci.org/aliyun/aliyun-emapreduce-demo)
+
 ## 本项目包含以下示例：
 
 #### MapReduce
