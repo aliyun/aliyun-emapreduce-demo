@@ -15,4 +15,4 @@ cache:
 # 4. Run maven install before running lint-java.
 install:
   - export MAVEN_SKIP_RC=1
-  - build/mvn -T 4 -q -DskipTests clean install 
+  - mvn -T 4 -q -DskipTests clean install 
