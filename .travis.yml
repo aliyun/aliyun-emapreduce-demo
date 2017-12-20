@@ -15,3 +15,8 @@ cache:
 install:
   - export MAVEN_SKIP_RC=1
   - mvn clean install -DskipTests
+  
+branches:
+  only:
+  - master
+  - master-2
