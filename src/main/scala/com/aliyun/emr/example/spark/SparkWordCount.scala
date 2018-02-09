@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
+package com.aliyun.emr.example.spark
 
 /** Counts words in new text files created in the given directory */
 object SparkWordCount extends RunLocally {
@@ -38,7 +38,7 @@ object SparkWordCount extends RunLocally {
     val outputPath = args(1)
     val numPartitions = args(2).toInt
 
-    val input = sc.textFile(inputPath, numPartitions)
+    val input = getSparkContext.textFile(inputPath, numPartitions)
     val output = input.flatMap(_.split(" ")).map(x => (x, 1)).reduceByKey(_ + _)
 
     output.saveAsTextFile(outputPath)

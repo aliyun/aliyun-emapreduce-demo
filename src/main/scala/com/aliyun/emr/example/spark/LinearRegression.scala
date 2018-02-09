@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
+package com.aliyun.emr.example.spark
 
-import _root_.scopt.OptionParser
 import org.apache.spark.mllib.optimization.{L1Updater, SimpleUpdater, SquaredL2Updater}
 import org.apache.spark.mllib.regression.LinearRegressionWithSGD
 import org.apache.spark.mllib.util.MLUtils
+import _root_.scopt.OptionParser
 
 object LinearRegression extends RunLocally{
   object RegType extends Enumeration {
@@ -82,7 +82,7 @@ object LinearRegression extends RunLocally{
   }
 
   def run(params: Params) {
-    val examples = MLUtils.loadLibSVMFile(sc,params.input).cache()
+    val examples = MLUtils.loadLibSVMFile(getSparkContext, params.input).cache()
     val splits = examples.randomSplit(Array(0.8, 0.2))
     val training = splits(0).cache()
     val test = splits(1).cache()
@@ -119,7 +119,7 @@ object LinearRegression extends RunLocally{
 
     println(s"Test RMSE = $rmse.")
 
-    sc.stop()
+    getSparkContext.stop()
   }
 
   override def getAppName: String = "LinearRegression"

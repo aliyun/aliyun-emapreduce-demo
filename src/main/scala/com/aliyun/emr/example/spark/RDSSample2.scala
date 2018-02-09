@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
+package com.aliyun.emr.example.spark
 
 import java.util.Properties
 
@@ -53,9 +52,9 @@ object RDSSample2 extends RunLocally {
     val inputPath = args(6)
     val numPartitions = args(7).toInt
 
-    val sqlContext = new SQLContext(sc)
+    val sqlContext = new SQLContext(getSparkContext)
 
-    val input = sc.textFile(inputPath, numPartitions)
+    val input = getSparkContext.textFile(inputPath, numPartitions)
     val counts = input.flatMap(_.split(" ")).map(x => (x, 1)).reduceByKey(_ + _).map(e => Row.apply(e._1, e._2))
 
     lazy val schema = StructType(
