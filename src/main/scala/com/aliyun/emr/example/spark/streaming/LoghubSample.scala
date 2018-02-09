@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
+package com.aliyun.emr.example.spark.streaming
 
 import org.apache.spark.SparkConf
 import org.apache.spark.storage.StorageLevel

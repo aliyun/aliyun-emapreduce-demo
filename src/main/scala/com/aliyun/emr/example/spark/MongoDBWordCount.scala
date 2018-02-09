@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
+package com.aliyun.emr.example.spark
 
 import com.stratio.datasource.mongodb._
 import com.stratio.datasource.mongodb.config._
@@ -65,9 +65,9 @@ object MongoDBWordCount extends RunLocally {
     val inputPath = args(10)
     val numPartitions = args(11).toInt
 
-    val sqlContext = new SQLContext(sc)
+    val sqlContext = new SQLContext(getSparkContext)
 
-    val input = sc.textFile(inputPath, numPartitions)
+    val input = getSparkContext.textFile(inputPath, numPartitions)
     val counts = input.flatMap(_.split(" ")).map(x => (x, 1)).reduceByKey(_ + _).map(e => Row.apply(e._1, e._2))
     lazy val schema = StructType(
         StructField("word", StringType) ::

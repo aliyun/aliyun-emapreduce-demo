@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,11 +15,13 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
+package com.aliyun.emr.example.spark
 
 import com.aliyun.odps.TableSchema
 import com.aliyun.odps.data.Record
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.aliyun.odps.OdpsOps
+import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
 
 object ODPSSample {
@@ -43,6 +44,8 @@ object ODPSSample {
       System.exit(1)
     }
 
+    Logger.getRootLogger.setLevel(Level.WARN)
+
     val accessKeyId = args(0)
     val accessKeySecret = args(1)
     val envType = args(2).toInt
@@ -55,7 +58,7 @@ object ODPSSample {
       Seq("http://odps-ext.aliyun-inc.com/api", "http://dt-ext.odps.aliyun-inc.com") // Aliyun internal environment
     )
 
-    val conf = new SparkConf().setAppName("ODPS Sample")
+    val conf = new SparkConf().setAppName("ODPS Sample").setMaster("local[*]")
     val sc = new SparkContext(conf)
     val odpsOps = envType match {
       case 0 =>
@@ -64,10 +67,9 @@ object ODPSSample {
         OdpsOps(sc, accessKeyId, accessKeySecret, urls(1)(0), urls(1)(1))
     }
 
-    val odpsData = odpsOps.readTable(project, table, read, numPartitions)
-
-    println("The top 10 elements are:")
-    odpsData.top(10).foreach(println)
+    val sqlContext = new SQLContext(sc)
+    val odpsData = odpsOps.loadOdpsTable(sqlContext, project, table, new Array[Int](0), numPartitions)
+    odpsData.collect().foreach(println)
   }
 
   def read(record: Record, schema: TableSchema): String = {
