@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example.streaming
+package com.aliyun.emr.example.spark.streaming
 
 import com.aliyun.openservices.ons.api.Message
 import org.apache.hadoop.conf.Configuration

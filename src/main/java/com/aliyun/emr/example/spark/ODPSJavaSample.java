@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example;
+package com.aliyun.emr.example.spark;
 
 import com.aliyun.odps.TableSchema;
 import com.aliyun.odps.data.Record;

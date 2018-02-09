@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example
-
+package com.aliyun.emr.example.spark
 
 import scala.reflect.runtime.universe._
 
