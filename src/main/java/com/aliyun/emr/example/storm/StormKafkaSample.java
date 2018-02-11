@@ -23,6 +23,15 @@ import org.apache.storm.StormSubmitter;
 import org.apache.storm.generated.AlreadyAliveException;
 import org.apache.storm.generated.AuthorizationException;
 import org.apache.storm.generated.InvalidTopologyException;
+import org.apache.storm.hdfs.bolt.HdfsBolt;
+import org.apache.storm.hdfs.bolt.format.DefaultFileNameFormat;
+import org.apache.storm.hdfs.bolt.format.DelimitedRecordFormat;
+import org.apache.storm.hdfs.bolt.format.FileNameFormat;
+import org.apache.storm.hdfs.bolt.format.RecordFormat;
+import org.apache.storm.hdfs.bolt.rotation.FileRotationPolicy;
+import org.apache.storm.hdfs.bolt.rotation.FileSizeRotationPolicy;
+import org.apache.storm.hdfs.bolt.sync.CountSyncPolicy;
+import org.apache.storm.hdfs.bolt.sync.SyncPolicy;
 import org.apache.storm.kafka.KafkaSpout;
 import org.apache.storm.kafka.SpoutConfig;
 import org.apache.storm.kafka.StringScheme;
@@ -33,10 +42,11 @@ import org.apache.storm.topology.TopologyBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StormKafkaSpout {
+public class StormKafkaSample {
     public static void main(String[] args) throws AuthorizationException {
         String topic = args[0] ;
         String zk = args[1];
+        String hdfsUrl = args[2];
         ZkHosts zkHosts = new ZkHosts(zk + ":2181/kafka-1.0.0");
         SpoutConfig spoutConfig = new SpoutConfig(zkHosts, topic, "/kafka-1.0.0", "MyTrack") ;
         List<String> zkServers = new ArrayList<String>() ;
@@ -46,16 +56,35 @@ public class StormKafkaSpout {
         spoutConfig.socketTimeoutMs = 60 * 1000 ;
         spoutConfig.scheme = new SchemeAsMultiScheme(new StringScheme()) ;
 
+        // use "|" instead of "," for field delimiter
+        RecordFormat format = new DelimitedRecordFormat()
+                .withFieldDelimiter("|");
+
+        // sync the filesystem after every 1k tuples
+        SyncPolicy syncPolicy = new CountSyncPolicy(1000);
+
+        // rotate files when they reach 5MB
+        FileRotationPolicy rotationPolicy = new FileSizeRotationPolicy(5.0f, FileSizeRotationPolicy.Units.MB);
+
+        FileNameFormat fileNameFormat = new DefaultFileNameFormat().withPath("/foo/");
+
+        HdfsBolt bolt = new HdfsBolt()
+                .withFsUrl(hdfsUrl)
+                .withFileNameFormat(fileNameFormat)
+                .withRecordFormat(format)
+                .withRotationPolicy(rotationPolicy)
+                .withSyncPolicy(syncPolicy);
+
         TopologyBuilder builder = new TopologyBuilder() ;
-        builder.setSpout("spout", new KafkaSpout(spoutConfig) ,1) ;
-        builder.setBolt("bolt", new StormKafkaBolt(), 1).shuffleGrouping("spout") ;
+        builder.setSpout("spout", new KafkaSpout(spoutConfig) ,2) ;
+        builder.setBolt("bolt", bolt, 1).shuffleGrouping("spout") ;
 
         Config conf = new Config ();
         conf.setDebug(false) ;
 
-        if (args.length > 2) {
+        if (args.length > 3) {
             try {
-                StormSubmitter.submitTopology(args[2], conf, builder.createTopology());
+                StormSubmitter.submitTopology(args[3], conf, builder.createTopology());
             } catch (AlreadyAliveException e) {
                 e.printStackTrace();
             } catch (InvalidTopologyException e) {
