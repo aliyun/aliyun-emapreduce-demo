@@ -7,10 +7,20 @@
     <groupId>com.aliyun.emr</groupId>
     <artifactId>examples</artifactId>
     <version>1.1</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>spark</module>
+        <module>flink</module>
+        <module>storm</module>
+        <module>hive</module>
+        <module>pig</module>
+        <module>hbase</module>
+        <module>hdfs</module>
+    </modules>
+    <packaging>pom</packaging>
     <name>Aliyun E-MapReduce Examples</name>
 
     <properties>
+        <scala.binary.version>2.11</scala.binary.version>
         <spark.version>2.2.1</spark.version>
         <flink.version>1.4.0</flink.version>
         <emr.version>1.4.2</emr.version>
@@ -19,7 +29,7 @@
         <loghubb.client.version>0.6.7</loghubb.client.version>
         <ons.version>1.2.7.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
-        <hadoop.version>2.2.0</hadoop.version>
+        <hadoop.version>2.7.2</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
         <fastjson.version>1.2.23</fastjson.version>
@@ -29,7 +39,10 @@
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
         <hbase.version>1.1.1</hbase.version>
+        <storm.version>1.0.1</storm.version>
     </properties>
+
+    <dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -202,7 +215,7 @@
                     <groupId>jdk.tools</groupId>
                     <artifactId>jdk.tools</artifactId>
                 </exclusion>
-            </exclusions>     
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -213,7 +226,7 @@
 
         <dependency>
             <groupId>com.github.scopt</groupId>
-            <artifactId>scopt_2.10</artifactId>
+            <artifactId>scopt_${scala.binary.version}</artifactId>
             <version>${scopt.version}</version>
         </dependency>
 
@@ -280,7 +293,25 @@
             <artifactId>hbase-protocol</artifactId>
             <version>${hbase.version}</version>
         </dependency>
-             
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <version>${hbase.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-thrift</artifactId>
+            <version>${hbase.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+
         <dependency>
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
@@ -320,19 +351,19 @@
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-core</artifactId>
-            <version>1.0.1</version>
+            <version>${storm.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-kafka</artifactId>
-            <version>1.0.1</version>
+            <version>${storm.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-hdfs</artifactId>
-            <version>1.0.1</version>
+            <version>${storm.version}</version>
         </dependency>
 
         <dependency>
@@ -348,6 +379,7 @@
         </dependency>
 
     </dependencies>
+    </dependencyManagement>
 
     <build>
         <outputDirectory>target/classes</outputDirectory>
@@ -393,56 +425,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.4.2</version>
-                <configuration>
-                    <shadedArtifactAttached>false</shadedArtifactAttached>
-                    <outputFile>${project.build.directory}/shaded/examples-${project.version}-shaded.jar</outputFile>
-                    <artifactSet>
-                        <includes>
-                            <include>com.aliyun.emr:emr-tablestore</include>
-                            <include>com.aliyun.emr:emr-mns_2.11</include>
-                            <include>com.aliyun.emr:emr-logservice_2.11</include>
-                            <include>com.aliyun.emr:emr-maxcompute_2.11</include>
-                            <include>com.aliyun.emr:emr-ons_2.11</include>
-                            <include>com.aliyun.odps:odps-sdk-core</include>
-                            <include>com.aliyun.odps:odps-sdk-commons</include>
-                            <include>com.aliyun.oss:aliyun-sdk-oss</include>
-                            <include>com.aliyun.openservices:aliyun-log</include>
-                            <include>com.aliyun.openservices:loghub-client-lib</include>
-                            <include>com.aliyun.openservices:ons-client</include>
-                            <include>com.aliyun.openservices:ons-api</include>
-                            <include>com.aliyun.mns:aliyun-sdk-mns</include>     
-                            <include>com.alibaba.rocketmq:rocketmq-client</include>
-                            <include>com.alibaba.rocketmq:rocketmq-common</include>
-                            <include>com.alibaba.rocketmq:rocketmq-remoting</include>
-                            <include>com.alibaba:fastjson</include>
-                            <include>com.google.guava:guava</include>
-                            <include>org.aspectj:aspectjrt</include>
-                            <include>com.github.scopt:scopt_2.10</include>
-                            <include>org.jdom:jdom</include>
-                            <include>net.sf.json-lib:json-lib</include>
-                            <include>net.sf.ezmorph:ezmorph</include>
-                            <include>commons-validator:commons-validator</include>
-                            <include>mysql:mysql-connector-java</include>
-                            <include>com.stratio.datasource:spark-mongodb_2.10</include>
-                            <include>redis.clients:jedis</include>
-                            <include>org.apache.commons:commons-pool2</include>
-                            <include>org.apache.hbase:hbase-common</include>
-                            <include>org.apache.hbase:hbase-client</include>
-                            <include>org.apache.hbase:hbase-protocol</include>
-                            <include>org.apache.httpcomponents:httpasyncclient</include>
-                            <include>org.apache.httpcomponents:httpcore-nio</include>
-                            <include>org.apache.httpcomponents:httpcore</include>
-                            <include>org.apache.spark:spark-streaming-kafka-0-10_2.11</include>
-                            <include>org.apache.kafka:kafka-clients</include>
-                            <include>org.apache.kafka:kafka_2.11</include>
-                            <include>org.apache.storm:storm-kafka</include>
-                            <include>org.apache.storm:storm-hdfs</include>
-                            <include>commons-lang:commons-lang</include>
-                            <include>org.apache.hadoop:hadoop-hdfs</include>
-                            <include>org.apache.hadoop:hadoop-common</include>
-                        </includes>
-                    </artifactSet>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -488,9 +470,9 @@
             </snapshots>
         </repository>
         <repository>
-            <id>uk.maven.org</id>   
-            <name>UK Central</name>   
-            <url>http://uk.maven.org/maven2</url>  
+            <id>uk.maven.org</id>
+            <name>UK Central</name>
+            <url>http://uk.maven.org/maven2</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
