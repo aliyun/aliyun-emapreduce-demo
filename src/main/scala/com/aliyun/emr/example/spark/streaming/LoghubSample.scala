@@ -17,16 +17,16 @@
 
 package com.aliyun.emr.example.spark.streaming
 
+import com.aliyun.openservices.loghub.client.config.LogHubCursorPosition
 import org.apache.spark.SparkConf
-import org.apache.spark.storage.StorageLevel
-import org.apache.spark.streaming.aliyun.logservice.LoghubUtils
+import org.apache.spark.streaming.aliyun.logservice.{DirectLoghubInputDStream, LoghubUtils}
 import org.apache.spark.streaming.{Milliseconds, StreamingContext}
 
 object LoghubSample {
   def main(args: Array[String]): Unit = {
     if (args.length < 7) {
       System.err.println(
-        """Usage: TestLoghub <sls project> <sls logstore> <loghub group name> <sls endpoint>
+        """Usage: LoghubSample <sls project> <sls logstore> <loghub group name> <sls endpoint>
           |         <access key id> <access key secret> <batch interval seconds> <zookeeper host:port=localhost:2181>
         """.stripMargin)
       System.exit(1)

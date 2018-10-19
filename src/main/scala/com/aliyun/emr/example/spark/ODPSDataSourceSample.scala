@@ -17,16 +17,13 @@
 
 package com.aliyun.emr.example.spark
 
-import java.sql.Timestamp
-
-import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.{SaveMode, SparkSession}
 
 object ODPSDataSourceSample {
   def main(args: Array[String]): Unit = {
     if (args.length < 6) {
       System.err.println(
-        """Usage: TestOdps <accessKeyId> <accessKeySecret> <envType> <project> <table> <numPartitions>
+        """Usage: ODPSDataSourceSample <accessKeyId> <accessKeySecret> <envType> <project> <table> <numPartitions>
           |
           |Arguments:
           |
@@ -41,8 +38,6 @@ object ODPSDataSourceSample {
         """.stripMargin)
       System.exit(1)
     }
-
-    Logger.getRootLogger.setLevel(Level.WARN)
 
     val accessKeyId = args(0)
     val accessKeySecret = args(1)
@@ -62,8 +57,12 @@ object ODPSDataSourceSample {
 
     import ss.implicits._
 
-    val dataSeq = Array((3L,false, new Timestamp(1510300054321L),4.0d,5.0f,2,1.toShort,"test11111", new Timestamp(1510429612345L),6.toByte,3.500000000000000000, "write22222"))
-    val df = ss.sparkContext.makeRDD(dataSeq).toDF("a1", "a2", "a3", "a4","a5", "a6","a7", "a8","a9", "a10","a11", "a12")
+    val dataSeq = (1 to 1000000).map {
+      index => (index, (index-3).toString)
+    }.toSeq
+
+
+    val df = ss.sparkContext.makeRDD(dataSeq).toDF("a", "b")
 
     System.out.println("*****" + table + ",before overwrite table")
     df.write.format("org.apache.spark.aliyun.odps.datasource")
@@ -72,7 +71,7 @@ object ODPSDataSourceSample {
       .option("table", table)
       .option("project", project)
       .option("accessKeySecret", accessKeySecret)
-      .option("accessKeyId", accessKeyId).mode(SaveMode.Append).save()
+      .option("accessKeyId", accessKeyId).mode(SaveMode.Overwrite).save()
 
     System.out.println("*****" + table + ",after overwrite table, before read table")
 
@@ -85,8 +84,11 @@ object ODPSDataSourceSample {
       .option("accessKeySecret", accessKeySecret)
       .option("accessKeyId", accessKeyId).load()
 
-    println(readDF.schema)
 
-    readDF.collect().foreach(println)
+    val collectList = readDF.collect()
+    System.out.println("*****" + table + ",after read table," + collectList.size)
+    assert(collectList.length == 1000000)
+    assert((1 to 1000000).par.exists(n => collectList.exists(_.getLong(0) == n)))
+
   }
 }
