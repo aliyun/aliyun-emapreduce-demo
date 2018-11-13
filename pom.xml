@@ -459,6 +459,7 @@
                             <include>commons-lang:commons-lang</include>
                             <include>org.apache.hadoop:hadoop-hdfs</include>
                             <include>org.apache.hadoop:hadoop-common</include>
+                            <include>com.101tec:zkclient</include>
                         </includes>
                     </artifactSet>
                 </configuration>
