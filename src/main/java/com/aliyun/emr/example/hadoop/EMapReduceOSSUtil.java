@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example.spark;
+package com.aliyun.emr.example.hadoop;
 
 import org.apache.hadoop.conf.Configuration;
 

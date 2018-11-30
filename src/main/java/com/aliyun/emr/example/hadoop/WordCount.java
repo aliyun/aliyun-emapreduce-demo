@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example.spark;
+package com.aliyun.emr.example.hadoop;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
