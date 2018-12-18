@@ -21,4 +21,4 @@ script:
 # 5. Branches only
 branches:
   only:
-  - master-2.x
+  - master-2
