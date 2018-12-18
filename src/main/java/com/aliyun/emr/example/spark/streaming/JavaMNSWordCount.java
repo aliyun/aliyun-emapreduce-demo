@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example.spark;
+package com.aliyun.emr.example.spark.streaming;
 
 import com.google.common.collect.Lists;
 import org.apache.spark.SparkConf;

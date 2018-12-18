@@ -13,7 +13,7 @@
     <properties>
         <spark.version>2.3.1</spark.version>
         <flink.version>1.4.0</flink.version>
-        <emr.version>1.4.4</emr.version>
+        <emr.version>1.5.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
         <loghubb.client.version>0.6.13</loghubb.client.version>
@@ -507,30 +507,5 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>uk.maven.org</id>   
-            <name>UK Central</name>   
-            <url>http://uk.maven.org/maven2</url>  
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>http://maven.aliyun.com/mvn/repository</url>
-            <layout>default</layout>
-            <snapshots>
-               <enabled>false</enabled>
-            </snapshots>
-            <releases>
-               <updatePolicy>never</updatePolicy>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
