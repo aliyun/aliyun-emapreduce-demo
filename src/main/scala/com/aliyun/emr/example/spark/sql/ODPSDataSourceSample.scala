@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aliyun.emr.example.spark
+package com.aliyun.emr.example.spark.sql
 
 import org.apache.spark.sql.{SaveMode, SparkSession}
 
