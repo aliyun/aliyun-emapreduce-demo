@@ -1,7 +1,24 @@
+# 1. Choose OS (Ubuntu 14.04.3 LTS Server Edition 64bit, ~2 CORE, 7.5GB RAM)
+sudo: required
+
+# 2. Choose language and target JDKs for parallel builds.
 language: java
 jdk:
-- openjdk7
-- oraclejdk8
-- oraclejdk9
+  - oraclejdk8
+
+# 3. Setup cache directory for SBT and Maven.
+cache:
+  directories:
+  - $HOME/.m2
+
+# 4. Run maven install before running lint-java.
+install:
+  -
+
 script:
-- mvn install -DskipTests=true
+  - mvn clean package -DskipTests
+
+# 5. Branches only
+branches:
+  only:
+  - master-2.x
