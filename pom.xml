@@ -6,14 +6,14 @@
 
     <groupId>com.aliyun.emr</groupId>
     <artifactId>examples</artifactId>
-    <version>1.1</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
-    <name>Aliyun E-MapReduce Examples</name>
+    <name>Aliyun E-MapReduce Demo Project</name>
 
     <properties>
         <spark.version>2.3.1</spark.version>
         <flink.version>1.4.0</flink.version>
-        <emr.version>1.5.0</emr.version>
+        <emr.version>1.6.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
         <loghubb.client.version>0.6.13</loghubb.client.version>
@@ -29,6 +29,8 @@
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
         <hbase.version>1.1.1</hbase.version>
+        <dts.version>4.6.27.12.0</dts.version>
+        <commons.lang3.version>3.3.2</commons.lang3.version>
     </properties>
 
     <dependencies>
@@ -132,6 +134,12 @@
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-ons_2.11</artifactId>
+            <version>${emr.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.emr</groupId>
+            <artifactId>emr-dts_2.11</artifactId>
             <version>${emr.version}</version>
         </dependency>
 
@@ -324,6 +332,18 @@
         </dependency>
 
         <dependency>
+            <groupId>com.aliyun.dts</groupId>
+            <artifactId>dts-subscribe-sdk</artifactId>
+            <version>${dts.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-core</artifactId>
             <version>1.1.2</version>
@@ -421,6 +441,7 @@
                             <include>com.aliyun.emr:emr-logservice_2.11</include>
                             <include>com.aliyun.emr:emr-maxcompute_2.11</include>
                             <include>com.aliyun.emr:emr-ons_2.11</include>
+                            <include>com.aliyun.emr:emr-dts_2.11</include>
                             <include>com.aliyun.odps:odps-sdk-core</include>
                             <include>com.aliyun.odps:odps-sdk-commons</include>
                             <include>com.aliyun.oss:aliyun-sdk-oss</include>
@@ -460,6 +481,8 @@
                             <include>org.apache.hadoop:hadoop-hdfs</include>
                             <include>org.apache.hadoop:hadoop-common</include>
                             <include>com.101tec:zkclient</include>
+                            <include>com.aliyun.dts:dts-subscribe-sdk</include>
+                            <include>org.apache.commons:commons-lang3</include>
                         </includes>
                     </artifactSet>
                 </configuration>
