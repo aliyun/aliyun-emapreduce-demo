@@ -24,7 +24,7 @@
         <scopt.version>3.2.0</scopt.version>
         <fastjson.version>1.2.45</fastjson.version>
         <guava.version>11.0.2</guava.version>
-        <mysql.connector.version>5.1.34</mysql.connector.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
         <mongodb.version>0.11.2</mongodb.version>
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
