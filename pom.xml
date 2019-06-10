@@ -11,24 +11,24 @@
     <name>Aliyun E-MapReduce Demo Project</name>
 
     <properties>
-        <spark.version>2.3.1</spark.version>
-        <flink.version>1.4.0</flink.version>
+        <spark.version>2.4.0</spark.version>
+        <flink.version>1.6.4</flink.version>
         <emr.version>1.6.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
         <loghubb.client.version>0.6.13</loghubb.client.version>
         <ons.version>1.7.1.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
-        <hadoop.version>2.9.0</hadoop.version>
+        <hadoop.version>3.1.2</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
         <fastjson.version>1.2.45</fastjson.version>
-        <guava.version>11.0.2</guava.version>
-        <mysql.connector.version>5.1.34</mysql.connector.version>
+        <guava.version>24.1.1-jre</guava.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
         <mongodb.version>0.11.2</mongodb.version>
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
-        <hbase.version>1.1.1</hbase.version>
+        <hbase.version>2.0.0</hbase.version>
         <dts.version>4.6.27.12.0</dts.version>
         <commons.lang3.version>3.3.2</commons.lang3.version>
     </properties>
@@ -304,7 +304,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
-            <version>4.1</version>
+            <version>4.1.2</version>
         </dependency>
 
         <dependency>
@@ -322,7 +322,7 @@
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.11</artifactId>
-            <version>0.10.0.1</version>
+            <version>2.1.1</version>
         </dependency>
 
         <dependency>
@@ -346,7 +346,7 @@
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-core</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -358,31 +358,31 @@
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-kafka</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-hdfs</artifactId>
-            <version>1.1.2</version>
+            <version>2.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-perf</artifactId>
-            <version>1.1.2</version>
+            <version>2.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
-            <version>2.6.1</version>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
-            <version>2.6.1</version>
+            <version>3.1.2</version>
         </dependency>
 
     </dependencies>
