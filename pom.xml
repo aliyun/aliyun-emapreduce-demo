@@ -13,7 +13,7 @@
     <properties>
         <spark.version>2.3.1</spark.version>
         <flink.version>1.4.0</flink.version>
-        <emr.version>1.6.0</emr.version>
+        <emr.version>1.7.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
         <loghubb.client.version>0.6.13</loghubb.client.version>
