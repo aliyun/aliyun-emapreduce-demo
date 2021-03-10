@@ -26,11 +26,11 @@ import org.apache.spark.sql.streaming.StreamingQuery;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class JavaStructuredLoghubWordCount {
+public class SparkSLSStructuredStreamingJavaDemo {
 
   public static void main(String[] args) throws Exception {
     if (args.length < 7) {
-      System.err.println("Usage: JavaStructuredLoghubWordCount <logService-project> " +
+      System.err.println("Usage: SparkSLSStructuredStreamingJavaDemo <logService-project> " +
           "<logService-store> <access-key-id> <access-key-secret> " +
           "<endpoint> <starting-offsets> <max-offsets-per-trigger> [<checkpoint-location>]");
       System.exit(1);
@@ -51,7 +51,7 @@ public class JavaStructuredLoghubWordCount {
     SparkSession spark = SparkSession
         .builder()
         .master("local[5]")
-        .appName("JavaStructuredKafkaWordCount")
+        .appName("E-MapReduce Demo 6-4: Spark SLS Demo (Java)")
         .getOrCreate();
 
     spark.sparkContext().setLogLevel("WARN");

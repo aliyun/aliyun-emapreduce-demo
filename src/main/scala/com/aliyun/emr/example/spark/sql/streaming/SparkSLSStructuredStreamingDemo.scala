@@ -19,12 +19,11 @@ package com.aliyun.emr.example.spark.sql.streaming
 import java.util.UUID
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.streaming.Trigger
 
-object ContinuousStructuredLoghubSample {
+object SparkSLSStructuredStreamingDemo {
   def main(args: Array[String]) {
     if (args.length < 7) {
-      System.err.println("Usage: ContinuousStructuredLoghubSample <logService-project> " +
+      System.err.println("Usage: SparkSLSStructuredStreamingDemo <logService-project> " +
         "<logService-store> <access-key-id> <access-key-secret> <endpoint> " +
         "<starting-offsets> <max-offsets-per-trigger> [<checkpoint-location>]")
       System.exit(1)
@@ -36,7 +35,7 @@ object ContinuousStructuredLoghubSample {
 
     val spark = SparkSession
       .builder
-      .appName("ContinuousStructuredLoghubSample")
+      .appName("E-MapReduce Demo 6-3: Spark SLS Demo (Scala)")
       .master("local[5]")
       .getOrCreate()
 
@@ -45,7 +44,7 @@ object ContinuousStructuredLoghubSample {
     import spark.implicits._
 
     // Create DataSet representing the stream of input lines from loghub
-    val lineLength = spark
+    val lines = spark
       .readStream
       .format("loghub")
       .option("sls.project", project)
@@ -54,16 +53,18 @@ object ContinuousStructuredLoghubSample {
       .option("access.key.secret", accessKeySecret)
       .option("endpoint", endpoint)
       .option("startingoffsets", startingOffsets)
+      .option("zookeeper.connect.address", "localhost:2181")
       .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
       .load()
       .selectExpr("CAST(value AS STRING)")
-      .as[String].map(e => (e, e.length)).toDF("value", "length")
+      .as[String]
 
-    val query = lineLength.writeStream
-      .outputMode("append")
+    val wordCounts = lines.flatMap(_.split(" ")).groupBy("value").count()
+
+    val query = wordCounts.writeStream
+      .outputMode("complete")
       .format("console")
       .option("checkpointLocation", checkpointLocation)
-      .trigger(Trigger.Continuous("5 second"))
       .start()
 
     query.awaitTermination()

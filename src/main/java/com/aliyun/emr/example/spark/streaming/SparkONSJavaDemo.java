@@ -36,12 +36,12 @@ import scala.Tuple2;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-public class JavaONSWordCount {
+public class SparkONSJavaDemo {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
         if (args.length < 5) {
-            System.err.println("Usage: bin/spark-submit --class ONSSample " +
+            System.err.println("Usage: bin/spark-submit --class SparkONSJavaDemo " +
                 "examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> " +
                 "<consumerId> <topic> <subExpression>");
             System.exit(1);
@@ -53,7 +53,7 @@ public class JavaONSWordCount {
         String topic = args[3];
         String subExpression = args[4];
 
-        SparkConf sparkConf = new SparkConf().setAppName("JavaONSWordCount");
+        SparkConf sparkConf = new SparkConf().setAppName("E-MapReduce Demo 4-2: Spark RocketMQ Demo (Java)");
         // Create the context with 2 seconds batch size
         JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, new Duration(2000));
 

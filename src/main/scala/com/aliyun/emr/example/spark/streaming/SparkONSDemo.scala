@@ -46,12 +46,17 @@ object ONSSample {
       System.exit(1)
     }
 
-    val Array(accessKeyId, accessKeySecret, cId, topic, subExpression, parallelism) = args
+    val accessKeyId = args(0)
+    val accessKeySecret = args(1)
+    val cId = args(2)
+    val topic = args(3)
+    val subExpression = args(4)
+    val parallelism = args(5)
 
     val numStreams = parallelism.toInt
     val batchInterval = Milliseconds(2000)
 
-    val conf = new SparkConf().setAppName("ONS Sample")
+    val conf = new SparkConf().setAppName("E-MapReduce Demo 4-1: Spark RocketMQ Demo (Scala)")
     val ssc = new StreamingContext(conf, batchInterval)
     def func: Message => Array[Byte] = msg => msg.getBody
     val onsStreams = (0 until numStreams).map { i =>
@@ -80,7 +85,7 @@ object OnsRecordProducer {
     val Array(accessKeyId, accessKeySecret, pId, topic, tag, parallelism) = args
 
     val numPartition = parallelism.toInt
-    val conf = new SparkConf().setAppName("ONS Record Producer")
+    val conf = new SparkConf().setAppName("E-MapReduce Demo 4-1: Spark RocketMQ Demo (Scala)")
     val sc = new SparkContext(conf)
 
     sc.parallelize(0 until numPartition, numPartition).mapPartitionsWithIndex {

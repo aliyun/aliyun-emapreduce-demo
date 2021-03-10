@@ -19,10 +19,10 @@ package com.aliyun.emr.example.spark
 
 import org.apache.hadoop.io.{LongWritable, Text}
 import org.apache.hadoop.mapred.TextInputFormat
-import org.apache.spark.SparkConf
+import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.aliyun.helper._
 
-object OSSSample extends RunLocally {
+object SparkOssDemo extends RunLocally {
   var accessKeyId = ""
   var accessKeySecret = ""
   var endpoint = ""
@@ -30,11 +30,14 @@ object OSSSample extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 2) {
       System.err.println(
-        """Usage: bin/spark-submit --class OSSSample examples-1.0-SNAPSHOT-shaded.jar <inputPath>
+        """Usage: bin/spark-submit --class com.aliyun.emr.example.SparkOssDemo examples-1.0-SNAPSHOT-shaded.jar <inputPath>
           |         <outputPath> <numPartition>
           |
           |Arguments:
           |
+          |    accessKeyId      OSS accessKeyId
+          |    accessKeySecret  OSS accessKeySecret
+          |    endpoint         OSS endpoint
           |    inputPath        Input OSS object path, like oss://bucket/input/a.txt
           |    outputPath       Output OSS object path, like oss://bucket/output/
           |    numPartitions    the number of RDD partitions.
@@ -50,14 +53,12 @@ object OSSSample extends RunLocally {
     val outputPath = args(4)
     val numPartitions = args(5).toInt
     val ossData = getSparkContext.hadoopFile(inputPath, classOf[TextInputFormat], classOf[LongWritable], classOf[Text], numPartitions)
-      .map(p => new String(p._2.getBytes, 0, p._2.getLength, "utf-8"))
-    println("The top 10 lines are:")
-    ossData.top(10).foreach(println)
+    print(ossData.count())
 
-    ossData.map(e => s"你好$e").saveAsTextFileWithEncoding(outputPath, "utf-8")
+    ossData.saveAsTextFile(outputPath)
   }
 
-  override def getAppName: String = "OSS Sample"
+  override def getAppName: String = "E-MapReduce Demo 2-1: Spark Oss Demo (Scala)"
 
   override def getSparkConf: SparkConf = {
     val conf = new SparkConf()

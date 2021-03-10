@@ -16,7 +16,7 @@
         <emr.version>1.6.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
-        <loghubb.client.version>0.6.13</loghubb.client.version>
+        <loghubb.client.version>0.6.11</loghubb.client.version>
         <ons.version>1.7.1.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
         <hadoop.version>2.9.0</hadoop.version>
@@ -103,13 +103,19 @@
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-core</artifactId>
             <version>${emr.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.squareup.okhttp3</groupId>
+                    <artifactId>okhttp</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--支持OTS数据源-->
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-tablestore</artifactId>
-            <version>${emr.version}</version>
+            <version>1.4.2</version>
         </dependency>
 
         <!-- 支持 MNS、ONS、LogService、MaxCompute数据源 (Spark 2.x环境)-->
@@ -117,6 +123,12 @@
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-mns_2.11</artifactId>
             <version>${emr.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.aliyun.mns</groupId>
+                    <artifactId>aliyun-sdk-mns</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -298,7 +310,8 @@
         <dependency>
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
-            <version>1.1.8</version>
+            <version>1.1.8.8</version>
+            <classifier>jar-with-dependencies</classifier>
         </dependency>
 
         <dependency>
@@ -385,6 +398,30 @@
             <version>2.6.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.emr</groupId>
+            <artifactId>emr-datahub_2.11</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.datahub</groupId>
+            <artifactId>aliyun-sdk-datahub</artifactId>
+            <version>2.13.0-public</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -402,7 +439,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>4.0.1</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -436,6 +473,15 @@
                     <outputFile>${project.build.directory}/shaded/examples-${project.version}-shaded.jar</outputFile>
                     <artifactSet>
                         <includes>
+                            <include>javax.mail:mail</include>
+                            <include>com.squareup.okhttp3:okhttp</include>
+                            <include>com.squareup.okio:okio</include>
+                            <include>com.squareup.okhttp3:logging-interceptor</include>
+                            <include>com.squareup.retrofit2:converter-jackson</include>
+                            <include>com.squareup.retrofit2:retrofit</include>
+                            <include>com.aliyun.openservices:aliyun-sls-v0.6-inner</include>
+                            <include>com.aliyun.datahub:aliyun-sdk-datahub</include>
+                            <include>com.aliyun.emr:emr-datahub_2.11</include>
                             <include>com.aliyun.emr:emr-tablestore</include>
                             <include>com.aliyun.emr:emr-mns_2.11</include>
                             <include>com.aliyun.emr:emr-logservice_2.11</include>

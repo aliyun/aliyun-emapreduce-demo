@@ -19,10 +19,11 @@ package com.aliyun.emr.example.spark
 
 import com.aliyun.odps.TableSchema
 import com.aliyun.odps.data.Record
+
 import org.apache.spark.aliyun.odps.OdpsOps
 import org.apache.spark.{SparkConf, SparkContext}
 
-object ODPSSample {
+object SparkMaxComputeDemo {
   def main(args: Array[String]): Unit = {
     if (args.length < 6) {
       System.err.println(
@@ -54,7 +55,7 @@ object ODPSSample {
       Seq("http://odps-ext.aliyun-inc.com/api", "http://dt-ext.odps.aliyun-inc.com") // Aliyun internal environment
     )
 
-    val conf = new SparkConf().setAppName("Test Odps Read")
+    val conf = new SparkConf().setAppName("E-MapReduce Demo 3-1: Spark MaxCompute Demo (Scala)")
     val sc = new SparkContext(conf)
     val odpsOps = envType match {
       case 0 =>
@@ -65,11 +66,11 @@ object ODPSSample {
 
     val odpsData = odpsOps.readTable(project, table, read, numPartitions)
 
-    println("The top 10 elements are:")
-    odpsData.top(10).foreach(println)
+    println("Count (odpsData): ")
+    println(odpsData.count())
   }
 
-  def read(record: Record, schema: TableSchema): String = {
-    record.getString(0)
+  def read(record: Record, schema: TableSchema): Long = {
+    record.getBigint(0)
   }
 }

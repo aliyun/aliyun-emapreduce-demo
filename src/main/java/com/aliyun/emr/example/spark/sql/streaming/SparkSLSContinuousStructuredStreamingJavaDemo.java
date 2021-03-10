@@ -24,11 +24,11 @@ import org.apache.spark.sql.streaming.Trigger;
 
 import java.util.UUID;
 
-public class JavaContinuousStructuredLoghubSample {
+public class SparkSLSContinuousStructuredStreamingJavaDemo {
 
   public static void main(String[] args) throws Exception {
     if (args.length < 7) {
-      System.err.println("Usage: JavaContinuousStructuredLoghubSample <logService-project> " +
+      System.err.println("Usage: SparkSLSContinuousStructuredStreamingJavaDemo <logService-project> " +
           "<logService-store> <access-key-id> <access-key-secret> " +
           "<endpoint> <starting-offsets> <max-offsets-per-trigger> [<checkpoint-location>]");
       System.exit(1);
@@ -49,7 +49,7 @@ public class JavaContinuousStructuredLoghubSample {
     SparkSession spark = SparkSession
         .builder()
         .master("local[5]")
-        .appName("JavaContinuousStructuredLoghubSample")
+        .appName("E-MapReduce Demo 6-6: Spark SLS Demo (Java)")
         .getOrCreate();
 
     spark.sparkContext().setLogLevel("WARN");

@@ -22,11 +22,11 @@ import java.util.Properties
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import org.apache.spark.sql.{Row, SQLContext}
 
-object RDSSample2 extends RunLocally {
+object SparkRdsDemo2 extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 8) {
       System.err.println(
-        """Usage: bin/spark-submit --class RDSSample1 examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
+        """Usage: bin/spark-submit --class SparkRdsDemo2 examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
           |       <dbPwd> <dbUrl> <dbPort> <inputPath> <numPartitions>
           |
           |Arguments:
@@ -69,5 +69,5 @@ object RDSSample2 extends RunLocally {
     df.write.jdbc(s"jdbc:mysql://$dbUrl:$dbPort/$dbName", tbName, properties)
   }
 
-  override def getAppName: String = "RDS Sample2"
+  override def getAppName: String = "E-MapReduce Demo 10-2: Spark Rds Demo (Scala)"
 }

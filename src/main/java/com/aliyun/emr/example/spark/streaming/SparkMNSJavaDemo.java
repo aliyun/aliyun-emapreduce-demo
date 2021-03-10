@@ -32,12 +32,12 @@ import scala.Tuple2;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-public class JavaMNSWordCount {
+public class SparkMNSJavaDemo {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
         if (args.length < 4) {
-            System.err.println("Usage: bin/spark-submit --class JavaMNSWordCount examples-1.0-SNAPSHOT-shaded.jar <queueName> " +
+            System.err.println("Usage: bin/spark-submit --class SparkMNSJavaDemo examples-1.0-SNAPSHOT-shaded.jar <queueName> " +
                     "<accessKeyId> <accessKeySecret> <endpoint>");
             System.exit(1);
         }
@@ -47,7 +47,9 @@ public class JavaMNSWordCount {
         String accessKeySecret = args[2];
         String endpoint = args[3];
 
-        SparkConf sparkConf = new SparkConf().setAppName("JavaMNSWordCount");
+        SparkConf sparkConf = new SparkConf().setAppName("E-MapReduce Demo 8-2: Spark MNS Demo (Java)").setMaster("local[4]");
+        sparkConf.set("spark.hadoop.fs.oss.impl", "com.aliyun.fs.oss.nat.NativeOssFileSystem");
+        sparkConf.set("spark.hadoop.mapreduce.job.run-local", "true");
         // Create the context with 2 seconds batch size
         JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, new Duration(2000));
 

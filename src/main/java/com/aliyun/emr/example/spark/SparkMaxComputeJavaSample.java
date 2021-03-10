@@ -31,10 +31,10 @@ import scala.runtime.BoxedUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ODPSJavaSample {
+public class SparkMaxComputeJavaSample {
 
     public static void main(String[] args) throws Exception {
-
+        String partition = null;
         String accessId = args[0];
         String accessKey = args[1];
 
@@ -43,32 +43,20 @@ public class ODPSJavaSample {
         String tunnelUrl = args[3];
         String project = args[4];
         String table = args[5];
-        String partition = args[6];
+        if (args.length > 6) {
+            partition = args[6];
+        }
 
-        SparkConf sparkConf = new SparkConf().setAppName("Spark ODPS Sample");
+        SparkConf sparkConf = new SparkConf().setAppName("E-MapReduce Demo 3-2: Spark MaxCompute Demo (Java)");
         JavaSparkContext jsc = new JavaSparkContext(sparkConf);
-
-        List<Integer> l = new ArrayList<Integer>();
-        for (int i = 1; i <= 30; i++) l.add(i);
-        JavaRDD<List<Long>> data = jsc.parallelize(l, 11).map(new Function<Integer, List<Long>>() {
-            @Override
-            public List<Long> call(Integer v1) throws Exception {
-                int columns = 20;
-                List<Long> ret = new ArrayList<Long>();
-                for (int i = 0; i < columns; i++) ret.add((long) (v1 + i));
-                return ret;
-            }
-        });
 
         OdpsOps odpsOps = new OdpsOps(jsc.sc(), accessId, accessKey, odpsUrl, tunnelUrl);
 
-        System.out.println("Write odps table...");
-        odpsOps.saveToTableWithJava(project, table, partition, data, new SaveRecord());
-
         System.out.println("Read odps table...");
-        JavaRDD<List<Long>> readData = odpsOps.readTableWithJava(project, table, partition, new RecordToLongs(), 13);
+        JavaRDD<List<Long>> readData = odpsOps.readTableWithJava(project, table, new RecordToLongs(), Integer.valueOf(partition));
 
-        System.out.println("counts: " + readData.count());
+        System.out.println("counts: ");
+        System.out.println(readData.count());
     }
 
     static class RecordToLongs implements Function2<Record, TableSchema, List<Long>> {
@@ -76,19 +64,10 @@ public class ODPSJavaSample {
         public List<Long> call(Record record, TableSchema schema) throws Exception {
             List<Long> ret = new ArrayList<Long>();
             for (int i = 0; i < schema.getColumns().size(); i++) {
-                ret.add(Long.valueOf(record.getString(i)));
+                ret.add(record.getBigint(i));
             }
             return ret;
         }
     }
 
-    static class SaveRecord implements Function3<List<Long>, Record, TableSchema, BoxedUnit> {
-        @Override
-        public BoxedUnit call(List<Long> data, Record record, TableSchema schema) throws Exception {
-            for (int i = 0; i < schema.getColumns().size(); i++) {
-                record.setString(i, data.get(i).toString());
-            }
-            return null;
-        }
-    }
 }
