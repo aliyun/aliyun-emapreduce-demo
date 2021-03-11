@@ -36,12 +36,12 @@ import scala.Tuple2;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-public class SparkONSJavaDemo {
+public class SparkRocketMQJavaDemo {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
         if (args.length < 5) {
-            System.err.println("Usage: bin/spark-submit --class SparkONSJavaDemo " +
+            System.err.println("Usage: spark-submit --class com.aliyun.emr.example.spark.streaming.SparkRocketMQJavaDemo " +
                 "examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> " +
                 "<consumerId> <topic> <subExpression>");
             System.exit(1);

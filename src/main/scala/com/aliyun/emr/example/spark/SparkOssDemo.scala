@@ -19,8 +19,7 @@ package com.aliyun.emr.example.spark
 
 import org.apache.hadoop.io.{LongWritable, Text}
 import org.apache.hadoop.mapred.TextInputFormat
-import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.aliyun.helper._
+import org.apache.spark.SparkConf
 
 object SparkOssDemo extends RunLocally {
   var accessKeyId = ""
@@ -30,8 +29,7 @@ object SparkOssDemo extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 2) {
       System.err.println(
-        """Usage: bin/spark-submit --class com.aliyun.emr.example.SparkOssDemo examples-1.0-SNAPSHOT-shaded.jar <inputPath>
-          |         <outputPath> <numPartition>
+        """Usage: bin/spark-submit --class com.aliyun.emr.example.spark.SparkOssDemo examples-1.0-SNAPSHOT-shaded.jar
           |
           |Arguments:
           |

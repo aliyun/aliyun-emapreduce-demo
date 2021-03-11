@@ -23,17 +23,14 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.aliyun.odps.OdpsOps;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
-import org.apache.spark.api.java.function.Function3;
-import scala.runtime.BoxedUnit;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SparkMaxComputeJavaSample {
+public class SparkMaxComputeJavaDemo {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String partition = null;
         String accessId = args[0];
         String accessKey = args[1];

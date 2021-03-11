@@ -27,7 +27,7 @@ object SparkMaxComputeDemo {
   def main(args: Array[String]): Unit = {
     if (args.length < 6) {
       System.err.println(
-        """Usage: ODPSSample <accessKeyId> <accessKeySecret> <envType> <project> <table> <numPartitions>
+        """Usage: SparkMaxComputeDemo <accessKeyId> <accessKeySecret> <envType> <project> <table> <numPartitions>
           |
           |Arguments:
           |

@@ -26,7 +26,7 @@ object SparkMNSDemo {
   def main(args: Array[String]): Unit = {
     if (args.length < 4) {
       System.err.println(
-        """Usage: bin/spark-submit --class SparkMNSDemo examples-1.0-SNAPSHOT-shaded.jar <queueName> <accessKeyId> <accessKeySecret> <endpoint>""".stripMargin)
+        """Usage: spark-submit --class SparkMNSDemo examples-1.0-SNAPSHOT-shaded.jar <queueName> <accessKeyId> <accessKeySecret> <endpoint>""".stripMargin)
       System.exit(1)
     }
     val queueName = args(0)

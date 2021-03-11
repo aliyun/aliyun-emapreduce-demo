@@ -26,11 +26,11 @@ import org.apache.spark.streaming.aliyun.ons.OnsUtils
 import org.apache.spark.streaming.{Milliseconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-object ONSSample {
+object SparkRocketMQDemo {
   def main(args: Array[String]): Unit = {
     if (args.length < 6) {
       System.err.println(
-        """Usage: bin/spark-submit --class ONSSample examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret>
+        """Usage: bin/spark-submit --class com.aliyun.emr.example.spark.streaming.SparkRocketMQDemo examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret>
           |         <consumerId> <topic> <subExpression> <parallelism>
           |
           |Arguments:

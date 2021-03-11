@@ -115,7 +115,7 @@
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-tablestore</artifactId>
-            <version>1.4.2</version>
+            <version>1.9.0</version>
         </dependency>
 
         <!-- 支持 MNS、ONS、LogService、MaxCompute数据源 (Spark 2.x环境)-->
@@ -495,7 +495,8 @@
                             <include>com.aliyun.openservices:loghub-client-lib</include>
                             <include>com.aliyun.openservices:ons-client</include>
                             <include>com.aliyun.openservices:ons-api</include>
-                            <include>com.aliyun.mns:aliyun-sdk-mns</include>     
+                            <include>com.aliyun.mns:aliyun-sdk-mns</include>
+                            <include>com.aliyun.openservices:tablestore</include>
                             <include>com.alibaba.rocketmq:rocketmq-client</include>
                             <include>com.alibaba.rocketmq:rocketmq-common</include>
                             <include>com.alibaba.rocketmq:rocketmq-remoting</include>

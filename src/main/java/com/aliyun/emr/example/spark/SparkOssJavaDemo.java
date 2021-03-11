@@ -23,15 +23,10 @@ import org.apache.hadoop.mapred.TextInputFormat;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import scala.Tuple2;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class SparkOssJavaDemo {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         String accessId = args[0];
         String accessKey = args[1];
