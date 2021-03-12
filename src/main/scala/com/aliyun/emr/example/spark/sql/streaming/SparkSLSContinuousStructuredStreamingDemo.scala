@@ -47,7 +47,7 @@ object SparkSLSContinuousStructuredStreamingDemo {
     // Create DataSet representing the stream of input lines from loghub
     val lineLength = spark
       .readStream
-      .format("loghub")
+      .format("org.apache.spark.sql.aliyun.logservice.LoghubSourceProvider")
       .option("sls.project", project)
       .option("sls.store", logStore)
       .option("access.key.id", accessKeyId)
@@ -56,7 +56,7 @@ object SparkSLSContinuousStructuredStreamingDemo {
       .option("startingoffsets", startingOffsets)
       .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
       .load()
-      .selectExpr("CAST(value AS STRING)")
+      .selectExpr("CAST(__value__ AS STRING)")
       .as[String].map(e => (e, e.length)).toDF("value", "length")
 
     val query = lineLength.writeStream

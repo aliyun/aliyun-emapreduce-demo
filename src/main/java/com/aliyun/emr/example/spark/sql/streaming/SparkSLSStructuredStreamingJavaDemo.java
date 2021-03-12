@@ -57,7 +57,7 @@ public class SparkSLSStructuredStreamingJavaDemo {
     spark.sparkContext().setLogLevel("WARN");
 
     Dataset<String> lines = spark.readStream()
-        .format("loghub")
+        .format("org.apache.spark.sql.aliyun.logservice.LoghubSourceProvider")
         .option("sls.project", logProject)
         .option("sls.store", logStore)
         .option("access.key.id", accessKeyId)
@@ -67,7 +67,7 @@ public class SparkSLSStructuredStreamingJavaDemo {
         .option("zookeeper.connect.address", "localhost:2181")
         .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
         .load()
-        .selectExpr("CAST(value AS STRING)")
+        .selectExpr("CAST(__value__ AS STRING)")
         .as(Encoders.STRING());
 
     // Generate running word count

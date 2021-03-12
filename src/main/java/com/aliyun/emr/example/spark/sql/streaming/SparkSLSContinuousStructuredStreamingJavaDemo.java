@@ -55,7 +55,7 @@ public class SparkSLSContinuousStructuredStreamingJavaDemo {
     spark.sparkContext().setLogLevel("WARN");
 
     Dataset<String> lines = spark.readStream()
-        .format("loghub")
+        .format("org.apache.spark.sql.aliyun.logservice.LoghubSourceProvider")
         .option("sls.project", logProject)
         .option("sls.store", logStore)
         .option("access.key.id", accessKeyId)
@@ -64,7 +64,7 @@ public class SparkSLSContinuousStructuredStreamingJavaDemo {
         .option("startingoffsets", startingOffsets)
         .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
         .load()
-        .selectExpr("CAST(value AS STRING)")
+        .selectExpr("CAST(__value__ AS STRING)")
         .as(Encoders.STRING());
 
     // Start running the query that prints the running counts to the console

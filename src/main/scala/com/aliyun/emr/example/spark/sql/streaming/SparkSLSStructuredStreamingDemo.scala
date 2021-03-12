@@ -46,7 +46,7 @@ object SparkSLSStructuredStreamingDemo {
     // Create DataSet representing the stream of input lines from loghub
     val lines = spark
       .readStream
-      .format("loghub")
+      .format("org.apache.spark.sql.aliyun.logservice.LoghubSourceProvider")
       .option("sls.project", project)
       .option("sls.store", logStore)
       .option("access.key.id", accessKeyId)
@@ -56,10 +56,10 @@ object SparkSLSStructuredStreamingDemo {
       .option("zookeeper.connect.address", "localhost:2181")
       .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
       .load()
-      .selectExpr("CAST(value AS STRING)")
+      .selectExpr("CAST(__value__ AS STRING)")
       .as[String]
 
-    val wordCounts = lines.flatMap(_.split(" ")).groupBy("value").count()
+    val wordCounts = lines.flatMap(_.split(" ")).groupBy("__value__").count()
 
     val query = wordCounts.writeStream
       .outputMode("complete")

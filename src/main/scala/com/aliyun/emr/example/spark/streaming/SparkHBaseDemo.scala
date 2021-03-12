@@ -48,7 +48,7 @@ object SparkHBaseDemo {
   def main(args: Array[String]): Unit = {
     if (args.length < 7) {
       System.err.println(
-        """Usage: bin/spark-submit --class SparkHBaseDemo examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret>
+        """Usage: spark-submit --class SparkHBaseDemo examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret>
           |         <consumerId> <topic> <subExpression> <parallelism> <tableName> <quorum>
           |
           |Arguments:

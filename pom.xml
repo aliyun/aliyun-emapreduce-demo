@@ -134,8 +134,15 @@
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-logservice_2.11</artifactId>
-            <version>${emr.version}</version>
+            <version>1.9.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.openservices</groupId>
+            <artifactId>aliyun-log</artifactId>
+            <version>0.6.60</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.aliyun.emr</groupId>
