@@ -83,7 +83,7 @@ object SparkDatahubDemo {
       }
 
       // scalastyle:off
-      datahubStream.checkpoint(batchInterval * 2).foreachRDD(rdd => println(rdd.count()))
+      datahubStream.foreachRDD(rdd => println(s"rdd.count(): ${rdd.count()}"))
       // scalastyle:on
       ssc.checkpoint("hdfs:///tmp/spark/streaming") // set checkpoint directory
       ssc

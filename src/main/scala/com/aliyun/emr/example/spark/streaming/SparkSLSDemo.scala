@@ -54,7 +54,7 @@ object SparkSLSDemo {
         accessKeySecret,
         StorageLevel.MEMORY_AND_DISK)
 
-      loghubStream.checkpoint(batchInterval * 2).foreachRDD(rdd => println(rdd.count()))
+      loghubStream.foreachRDD(rdd => println(s"rdd.count(): ${rdd.count()}"))
       ssc.checkpoint("hdfs:///tmp/spark/streaming") // set checkpoint directory
       ssc
     }

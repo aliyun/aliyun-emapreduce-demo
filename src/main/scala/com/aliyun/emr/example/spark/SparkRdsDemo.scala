@@ -17,16 +17,13 @@
 
 package com.aliyun.emr.example.spark
 
-import java.util.Properties
+import java.sql.{Connection, DriverManager, PreparedStatement}
 
-import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
-import org.apache.spark.sql.{Row, SQLContext}
-
-object SparkRdsDemo2 extends RunLocally {
+object SparkRdsDemo extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 8) {
       System.err.println(
-        """Usage: bin/spark-submit --class SparkRdsDemo2 examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
+        """Usage: spark-submit --class SparkRdsDemo examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
           |       <dbPwd> <dbUrl> <dbPort> <inputPath> <numPartitions>
           |
           |Arguments:
@@ -52,22 +49,37 @@ object SparkRdsDemo2 extends RunLocally {
     val inputPath = args(6)
     val numPartitions = args(7).toInt
 
-    val sqlContext = new SQLContext(getSparkContext)
-
     val input = getSparkContext.textFile(inputPath, numPartitions)
-    val counts = input.flatMap(_.split(" ")).map(x => (x, 1)).reduceByKey(_ + _).map(e => Row.apply(e._1, e._2))
+    input.collect().foreach(println)
+    input.flatMap(_.split(" ")).map(x => (x, 1)).reduceByKey(_ + _)
+      .mapPartitions(e => {
+        var conn: Connection = null
+        var ps: PreparedStatement = null
+        val sql = s"insert into $tbName(word, count) values (?, ?)"
+        try {
+          conn = DriverManager.getConnection(s"jdbc:mysql://$dbUrl:$dbPort/$dbName", dbUser, dbPwd)
+          ps = conn.prepareStatement(sql)
+          e.foreach(pair => {
+            ps.setString(1, pair._1)
+            ps.setLong(2, pair._2)
+            ps.executeUpdate()
+          })
 
-    lazy val schema = StructType(
-        StructField("word", StringType) ::
-        StructField("count", IntegerType) :: Nil)
-
-    val properties = new Properties()
-    properties.setProperty("user", dbUser)
-    properties.setProperty("password", dbPwd)
-
-    val df = sqlContext.createDataFrame(counts, schema)
-    df.write.jdbc(s"jdbc:mysql://$dbUrl:$dbPort/$dbName", tbName, properties)
+          ps.close()
+          conn.close()
+        } catch {
+          case e: Exception => e.printStackTrace()
+        } finally {
+          if (ps != null) {
+            ps.close()
+          }
+          if (conn != null) {
+            conn.close()
+          }
+        }
+      Iterator.empty
+    }).count()
   }
 
-  override def getAppName: String = "E-MapReduce Demo 10-2: Spark Rds Demo (Scala)"
+  override def getAppName: String = "E-MapReduce Demo 10: Spark Rds Demo (Scala)"
 }

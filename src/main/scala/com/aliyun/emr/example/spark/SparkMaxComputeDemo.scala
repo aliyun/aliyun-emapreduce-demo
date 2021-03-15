@@ -66,8 +66,7 @@ object SparkMaxComputeDemo {
 
     val odpsData = odpsOps.readTable(project, table, read, numPartitions)
 
-    println("Count (odpsData): ")
-    println(odpsData.count())
+    println(s"Count (odpsData): ${odpsData.count()}")
   }
 
   def read(record: Record, schema: TableSchema): Long = {

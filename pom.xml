@@ -13,10 +13,10 @@
     <properties>
         <spark.version>2.3.1</spark.version>
         <flink.version>1.4.0</flink.version>
-        <emr.version>1.6.0</emr.version>
+        <emr.version>2.0.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
-        <loghubb.client.version>0.6.11</loghubb.client.version>
+        <loghubb.client.version>0.6.13</loghubb.client.version>
         <ons.version>1.7.1.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
         <hadoop.version>2.9.0</hadoop.version>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-core</artifactId>
-            <version>${emr.version}</version>
+            <version>1.6.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.squareup.okhttp3</groupId>
@@ -115,7 +115,7 @@
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-tablestore</artifactId>
-            <version>1.9.0</version>
+            <version>${emr.version}</version>
         </dependency>
 
         <!-- 支持 MNS、ONS、LogService、MaxCompute数据源 (Spark 2.x环境)-->
@@ -134,7 +134,7 @@
         <dependency>
             <groupId>com.aliyun.emr</groupId>
             <artifactId>emr-logservice_2.11</artifactId>
-            <version>1.9.1</version>
+            <version>${emr.version}</version>
         </dependency>
 
         <dependency>
@@ -318,7 +318,6 @@
             <groupId>com.aliyun.mns</groupId>
             <artifactId>aliyun-sdk-mns</artifactId>
             <version>1.1.8.8</version>
-            <classifier>jar-with-dependencies</classifier>
         </dependency>
 
         <dependency>
@@ -429,6 +428,12 @@
             <version>2.13.0-public</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.htrace</groupId>
+            <artifactId>htrace-core</artifactId>
+            <version>3.1.0-incubating</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -481,6 +486,7 @@
                     <artifactSet>
                         <includes>
                             <include>javax.mail:mail</include>
+                            <include>org.apache.htrace:htrace-core</include>
                             <include>com.squareup.okhttp3:okhttp</include>
                             <include>com.squareup.okio:okio</include>
                             <include>com.squareup.okhttp3:logging-interceptor</include>

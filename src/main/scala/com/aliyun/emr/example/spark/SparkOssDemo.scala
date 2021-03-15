@@ -51,7 +51,7 @@ object SparkOssDemo extends RunLocally {
     val outputPath = args(4)
     val numPartitions = args(5).toInt
     val ossData = getSparkContext.hadoopFile(inputPath, classOf[TextInputFormat], classOf[LongWritable], classOf[Text], numPartitions)
-    print(ossData.count())
+    ossData.foreach(line => println(s"print: ${line}"))
 
     ossData.saveAsTextFile(outputPath)
   }
