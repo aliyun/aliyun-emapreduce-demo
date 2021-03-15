@@ -98,19 +98,6 @@
             <version>1.4.2</version>
         </dependency>
 
-        <!--支持OSS数据源 -->
-        <dependency>
-            <groupId>com.aliyun.emr</groupId>
-            <artifactId>emr-core</artifactId>
-            <version>1.6.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.squareup.okhttp3</groupId>
-                    <artifactId>okhttp</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!--支持OTS数据源-->
         <dependency>
             <groupId>com.aliyun.emr</groupId>
