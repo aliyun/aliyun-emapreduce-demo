@@ -62,29 +62,32 @@
 		- outputPath： 输出路径
 		- numPartition： 输入数据RDD分片数目
 	- SparkPi： `spark-submit --class SparkPi examples-1.0-SNAPSHOT-shaded.jar`
-	- OSSSample：`spark-submit --class OSSSample examples-1.0-SNAPSHOT-shaded.jar <inputPath> <numPartition>`
+	- SparkOssDemo：`spark-submit --class SparkOssDemo examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> <endpoint> <inputPath> <numPartition>`
+	    - accessKeyId： 阿里云AccessKeyId
+        - accessKeySecret：阿里云AccessKeySecret
+        - endpoint: 阿里云OSS endpoint
 		- inputPath: 输入数据路径
 		- numPartition：输入数据RDD分片数目
-	- ONSSample： `spark-submit --class ONSSample examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> <consumerId> <topic> <subExpression> <parallelism>`
+	- SparkRocketMQDemo： `spark-submit --class SparkRocketMQDemo examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> <consumerId> <topic> <subExpression> <parallelism>`
 		- accessKeyId： 阿里云AccessKeyId
 		- accessKeySecret：阿里云AccessKeySecret
 		- consumerId: 参考[Consumer ID说明](https://help.aliyun.com/document_detail/ons/brief-manual/terminology.html?spm=5176.docons/brief-manual/overview.6.87.F8suBu)
 		- topic: 每个消息队列都有一个topic
 		- subExpression: 参考[消息过滤](https://help.aliyun.com/document_detail/ons/user-guide/tag-filter.html?spm=5176.docons/tcp/java-sdk/normal-consumer.6.97.PIqsEo)。
 		- parallelism：指定多少个接收器来消费队列消息。
-	- ODPSSample: `spark-submit --class ODPSSample examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> <envType> <project> <table> <numPartitions>`
+	- SparkMaxComputeDemo: `spark-submit --class SparkMaxComputeDemo examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> <envType> <project> <table> <numPartitions>`
 		- accessKeyId： 阿里云AccessKeyId
 		- accessKeySecret：阿里云AccessKeySecret
 		- envType： 0表示公网环境，1表示内网环境。如果是本地调试选择0，如果是在E-MapReduce上执行请选择1。
 		- project：参考[ODPS-快速开始](https://help.aliyun.com/document_detail/odps/quick_start/prerequisite.html?spm=5176.docodps/summary/glossary.6.90.inv9Ph)。
 		- table：参考[ODPS术语介绍](https://help.aliyun.com/document_detail/odps/summary/glossary.html?spm=5176.docodps/quick_start/prerequisite.6.88.A5zVKu)。
 		- numPartition：输入数据RDD分片数目
-	- MNSSample: `spark-submit --class MNSSample examples-1.0-SNAPSHOT-shaded.jar <queueName> <accessKeyId> <accessKeySecret> <endpoint>`
+	- SparkMNSDemo: `spark-submit --class SparkMNSDemo examples-1.0-SNAPSHOT-shaded.jar <queueName> <accessKeyId> <accessKeySecret> <endpoint>`
 		- queueName：队列名，[参考MNS名词解释](https://help.aliyun.com/document_detail/mns/introduction/product-name-interpretation.html?spm=5176.docmns/help_of_console/help_of_queue/CreateQueue.6.87.lHtPvO)。
 		- accessKeyId： 阿里云AccessKeyId
 		- accessKeySecret：阿里云AccessKeySecret
 		- endpoint：队列数据访问地址 
-	- LoghubSample: `spark-submit --class LoghubSample examples-1.0-SNAPSHOT-shaded.jar <sls project> <sls logstore> <loghub group name> <sls endpoint> <access key id> <access key secret> <batch interval seconds>`
+	- SparkSLSDemo: `spark-submit --class SparkSLSDemo examples-1.0-SNAPSHOT-shaded.jar <sls project> <sls logstore> <loghub group name> <sls endpoint> <access key id> <access key secret> <batch interval seconds>`
 		- sls project: LogService项目名
 		- sls logstore： 日志库名
 		- loghub group name：作业中消费日志数据的组名，可以任意取。sls project，sls store相同时，相同组名的作业会协同消费sls store中的数据；不同组名的作业会相互隔离地消费sls store中的数据。
