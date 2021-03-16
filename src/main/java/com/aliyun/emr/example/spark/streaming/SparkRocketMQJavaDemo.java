@@ -17,6 +17,7 @@
 
 package com.aliyun.emr.example.spark.streaming;
 
+import com.aliyun.openservices.ons.api.Message;
 import com.google.common.collect.Lists;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.function.FlatMapFunction;
@@ -25,34 +26,44 @@ import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.Duration;
-import org.apache.spark.streaming.aliyun.mns.MnsUtils;
-import org.apache.spark.streaming.api.java.*;
+import org.apache.spark.streaming.aliyun.ons.OnsUtils;
+import org.apache.spark.streaming.api.java.JavaDStream;
+import org.apache.spark.streaming.api.java.JavaPairDStream;
+import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
+import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import scala.Tuple2;
 
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-public class JavaMNSWordCount {
+public class SparkRocketMQJavaDemo {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
-        if (args.length < 4) {
-            System.err.println("Usage: bin/spark-submit --class JavaMNSWordCount examples-1.0-SNAPSHOT-shaded.jar <queueName> " +
-                    "<accessKeyId> <accessKeySecret> <endpoint>");
+        if (args.length < 5) {
+            System.err.println("Usage: spark-submit --class com.aliyun.emr.example.spark.streaming.SparkRocketMQJavaDemo " +
+                "examples-1.0-SNAPSHOT-shaded.jar <accessKeyId> <accessKeySecret> " +
+                "<consumerId> <topic> <subExpression>");
             System.exit(1);
         }
 
-        String queueName = args[0];
-        String accessKeyId = args[1];
-        String accessKeySecret = args[2];
-        String endpoint = args[3];
+        String accessKeyId = args[0];
+        String accessKeySecret = args[1];
+        String consumerId = args[2];
+        String topic = args[3];
+        String subExpression = args[4];
 
-        SparkConf sparkConf = new SparkConf().setAppName("JavaMNSWordCount");
+        SparkConf sparkConf = new SparkConf().setAppName("E-MapReduce Demo 4-2: Spark RocketMQ Demo (Java)");
         // Create the context with 2 seconds batch size
         JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, new Duration(2000));
 
-        JavaReceiverInputDStream<byte[]> lines = MnsUtils.createPullingStreamAsBytes(jssc, queueName, accessKeyId,
-                accessKeySecret, endpoint, StorageLevel.MEMORY_AND_DISK());
+        JavaReceiverInputDStream<byte[]> lines = OnsUtils.createStream(jssc, consumerId, topic, subExpression,
+                accessKeyId, accessKeySecret, StorageLevel.MEMORY_AND_DISK(), new Function<Message, byte[]>() {
+                    @Override
+                    public byte[] call(Message msg) throws Exception {
+                        return msg.getBody();
+                    }
+                });
 
         JavaDStream<String> words = lines.map(new Function<byte[], String>() {
             @Override

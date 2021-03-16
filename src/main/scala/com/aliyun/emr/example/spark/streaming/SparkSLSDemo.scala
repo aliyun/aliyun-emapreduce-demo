@@ -17,17 +17,18 @@
 
 package com.aliyun.emr.example.spark.streaming
 
-import com.aliyun.openservices.loghub.client.config.LogHubCursorPosition
 import org.apache.spark.SparkConf
-import org.apache.spark.streaming.aliyun.logservice.{DirectLoghubInputDStream, LoghubUtils}
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{Milliseconds, StreamingContext}
+import org.apache.spark.streaming.aliyun.logservice.LoghubUtils
 
-object DirectLoghubSample {
+object SparkSLSDemo {
+
   def main(args: Array[String]): Unit = {
     if (args.length < 7) {
       System.err.println(
-        """Usage: DirectLoghubSample <sls project> <sls logstore> <loghub group name> <sls endpoint>
-          |         <access key id> <access key secret> <batch interval seconds> <zookeeper host:port=localhost:2181>
+        """Usage: SparkSLSDemo <sls project> <sls logstore> <loghub group name> <sls endpoint>
+          |         <access key id> <access key secret> <batch interval seconds>
         """.stripMargin)
       System.exit(1)
     }
@@ -39,31 +40,21 @@ object DirectLoghubSample {
     val accessKeyId = args(4)
     val accessKeySecret = args(5)
     val batchInterval = Milliseconds(args(6).toInt * 1000)
-    val zkAddress = if (args.length >= 8) args(7) else "localhost:2181"
 
     def functionToCreateContext(): StreamingContext = {
-      val conf = new SparkConf().setAppName("DirectLoghubSample")
+      val conf = new SparkConf().setAppName("E-MapReduce Demo 6-1: Spark SLS Demo (Scala)")
       val ssc = new StreamingContext(conf, batchInterval)
-      val zkParas = Map("zookeeper.connect" -> zkAddress,
-        "enable.auto.commit" -> "false")
-      val loghubStream = LoghubUtils.createDirectStream(
+      val loghubStream = LoghubUtils.createStream(
         ssc,
         loghubProject,
         logStore,
         loghubGroupName,
+        endpoint,
         accessKeyId,
         accessKeySecret,
-        endpoint,
-        zkParas,
-        LogHubCursorPosition.END_CURSOR)
+        StorageLevel.MEMORY_AND_DISK)
 
-      loghubStream.checkpoint(batchInterval).foreachRDD(rdd => {
-        println(s"count by key: ${rdd.map(s => {
-          s.sorted
-          (s.length, s)
-        }).countByKey().size}")
-        loghubStream.asInstanceOf[DirectLoghubInputDStream].commitAsync()
-      })
+      loghubStream.foreachRDD(rdd => println(s"rdd.count(): ${rdd.count()}"))
       ssc.checkpoint("hdfs:///tmp/spark/streaming") // set checkpoint directory
       ssc
     }

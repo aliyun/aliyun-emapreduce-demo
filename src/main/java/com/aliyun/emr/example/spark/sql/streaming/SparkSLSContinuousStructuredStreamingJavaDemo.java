@@ -16,21 +16,19 @@
  */
 package com.aliyun.emr.example.spark.sql.streaming;
 
-import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQuery;
+import org.apache.spark.sql.streaming.Trigger;
 
-import java.util.Arrays;
 import java.util.UUID;
 
-public class JavaStructuredLoghubWordCount {
+public class SparkSLSContinuousStructuredStreamingJavaDemo {
 
   public static void main(String[] args) throws Exception {
     if (args.length < 7) {
-      System.err.println("Usage: JavaStructuredLoghubWordCount <logService-project> " +
+      System.err.println("Usage: SparkSLSContinuousStructuredStreamingJavaDemo <logService-project> " +
           "<logService-store> <access-key-id> <access-key-secret> " +
           "<endpoint> <starting-offsets> <max-offsets-per-trigger> [<checkpoint-location>]");
       System.exit(1);
@@ -51,35 +49,30 @@ public class JavaStructuredLoghubWordCount {
     SparkSession spark = SparkSession
         .builder()
         .master("local[5]")
-        .appName("JavaStructuredKafkaWordCount")
+        .appName("E-MapReduce Demo 6-6: Spark SLS Demo (Java)")
         .getOrCreate();
 
     spark.sparkContext().setLogLevel("WARN");
 
     Dataset<String> lines = spark.readStream()
-        .format("loghub")
+        .format("org.apache.spark.sql.aliyun.logservice.LoghubSourceProvider")
         .option("sls.project", logProject)
         .option("sls.store", logStore)
         .option("access.key.id", accessKeyId)
         .option("access.key.secret", accessKeySecret)
         .option("endpoint", endpoint)
         .option("startingoffsets", startingOffsets)
-        .option("zookeeper.connect.address", "localhost:2181")
         .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
         .load()
-        .selectExpr("CAST(value AS STRING)")
+        .selectExpr("CAST(__value__ AS STRING)")
         .as(Encoders.STRING());
 
-    // Generate running word count
-    Dataset<Row> wordCounts = lines.flatMap(
-        (FlatMapFunction<String, String>) x -> Arrays.asList(x.split(" ")).iterator(),
-        Encoders.STRING()).groupBy("value").count();
-
     // Start running the query that prints the running counts to the console
-    StreamingQuery query = wordCounts.writeStream()
-        .outputMode("complete")
+    StreamingQuery query = lines.writeStream()
+        .outputMode("append")
         .format("console")
         .option("checkpointLocation", checkpointLocation)
+        .trigger(Trigger.Continuous("5 second"))
         .start();
 
     query.awaitTermination();

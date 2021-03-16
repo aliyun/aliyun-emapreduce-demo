@@ -19,11 +19,11 @@ package com.aliyun.emr.example.spark
 
 import java.sql.{Connection, DriverManager, PreparedStatement}
 
-object RDSSample1 extends RunLocally {
+object SparkRdsDemo extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 8) {
       System.err.println(
-        """Usage: bin/spark-submit --class RDSSample1 examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
+        """Usage: spark-submit --class SparkRdsDemo examples-1.0-SNAPSHOT-shaded.jar <dbName> <tbName> <dbUser>
           |       <dbPwd> <dbUrl> <dbPort> <inputPath> <numPartitions>
           |
           |Arguments:
@@ -81,5 +81,5 @@ object RDSSample1 extends RunLocally {
     }).count()
   }
 
-  override def getAppName: String = "RDS Sample1"
+  override def getAppName: String = "E-MapReduce Demo 10: Spark Rds Demo (Scala)"
 }

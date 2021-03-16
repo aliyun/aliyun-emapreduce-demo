@@ -19,11 +19,12 @@ package com.aliyun.emr.example.spark.sql.streaming
 import java.util.UUID
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.streaming.Trigger
 
-object StructuredLoghubWordCount {
+object SparkSLSContinuousStructuredStreamingDemo {
   def main(args: Array[String]) {
     if (args.length < 7) {
-      System.err.println("Usage: StructuredLoghubWordCount <logService-project> " +
+      System.err.println("Usage: SparkSLSContinuousStructuredStreamingDemo <logService-project> " +
         "<logService-store> <access-key-id> <access-key-secret> <endpoint> " +
         "<starting-offsets> <max-offsets-per-trigger> [<checkpoint-location>]")
       System.exit(1)
@@ -35,7 +36,7 @@ object StructuredLoghubWordCount {
 
     val spark = SparkSession
       .builder
-      .appName("StructuredLoghubWordCount")
+      .appName("E-MapReduce Demo 6-5: Spark SLS Demo (Scala)")
       .master("local[5]")
       .getOrCreate()
 
@@ -44,27 +45,25 @@ object StructuredLoghubWordCount {
     import spark.implicits._
 
     // Create DataSet representing the stream of input lines from loghub
-    val lines = spark
+    val lineLength = spark
       .readStream
-      .format("loghub")
+      .format("org.apache.spark.sql.aliyun.logservice.LoghubSourceProvider")
       .option("sls.project", project)
       .option("sls.store", logStore)
       .option("access.key.id", accessKeyId)
       .option("access.key.secret", accessKeySecret)
       .option("endpoint", endpoint)
       .option("startingoffsets", startingOffsets)
-      .option("zookeeper.connect.address", "localhost:2181")
       .option("maxOffsetsPerTrigger", maxOffsetsPerTrigger)
       .load()
-      .selectExpr("CAST(value AS STRING)")
-      .as[String]
+      .selectExpr("CAST(__value__ AS STRING)")
+      .as[String].map(e => (e, e.length)).toDF("value", "length")
 
-    val wordCounts = lines.flatMap(_.split(" ")).groupBy("value").count()
-
-    val query = wordCounts.writeStream
-      .outputMode("complete")
+    val query = lineLength.writeStream
+      .outputMode("append")
       .format("console")
       .option("checkpointLocation", checkpointLocation)
+      .trigger(Trigger.Continuous("5 second"))
       .start()
 
     query.awaitTermination()

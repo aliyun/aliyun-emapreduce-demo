@@ -22,11 +22,11 @@ import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.aliyun.mns.MnsUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
-object MNSSample {
+object SparkMNSDemo {
   def main(args: Array[String]): Unit = {
     if (args.length < 4) {
       System.err.println(
-        """Usage: bin/spark-submit --class MNSSample examples-1.0-SNAPSHOT-shaded.jar <queueName> <accessKeyId> <accessKeySecret> <endpoint>""".stripMargin)
+        """Usage: spark-submit --class SparkMNSDemo examples-1.0-SNAPSHOT-shaded.jar <queueName> <accessKeyId> <accessKeySecret> <endpoint>""".stripMargin)
       System.exit(1)
     }
     val queueName = args(0)
@@ -34,7 +34,9 @@ object MNSSample {
     val accessKeySecret = args(2)
     val endpoint = args(3)
 
-    val conf = new SparkConf().setAppName("MNS Sample")
+    val conf = new SparkConf().setAppName("E-MapReduce Demo 8-1: Spark MNS Demo (Scala)").setMaster("local[4]")
+    conf.set("spark.hadoop.fs.oss.impl", "com.aliyun.fs.oss.nat.NativeOssFileSystem")
+    conf.set("spark.hadoop.mapreduce.job.run-local", "true")
     val batchInterval = Seconds(10)
     val ssc = new StreamingContext(conf, batchInterval)
 

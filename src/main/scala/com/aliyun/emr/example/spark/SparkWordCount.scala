@@ -22,7 +22,7 @@ object SparkWordCount extends RunLocally {
   def main(args: Array[String]): Unit = {
     if (args.length < 3) {
       System.err.println(
-        """Usage: bin/spark-submit --class SparkWordCount examples-1.0-SNAPSHOT-shaded.jar <inputPath> <outputPath> <numPartition>
+        """Usage: bin/spark-submit --class com.aliyun.emr.example.SparkWordCount examples-1.0-SNAPSHOT-shaded.jar <inputPath> <outputPath> <numPartition>
           |
           |Arguments:
           |
@@ -44,5 +44,5 @@ object SparkWordCount extends RunLocally {
     output.saveAsTextFile(outputPath)
   }
 
-  override def getAppName: String = "SparkWordCount"
+  override def getAppName: String = "E-MapReduce Demo 1: SparkWordCount"
 }
