@@ -16,7 +16,7 @@
         <emr.version>2.0.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
-        <loghubb.client.version>0.6.13</loghubb.client.version>
+        <loghubb.client.version>0.6.37</loghubb.client.version>
         <ons.version>1.7.1.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
         <hadoop.version>2.9.0</hadoop.version>
