@@ -12,7 +12,7 @@
 
     <properties>
         <spark.version>2.3.1</spark.version>
-        <flink.version>1.4.0</flink.version>
+        <flink.version>1.13.3</flink.version>
         <emr.version>2.0.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
         <odps.version>0.28.4-public</odps.version>
@@ -28,7 +28,7 @@
         <mongodb.version>0.11.2</mongodb.version>
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
-        <hbase.version>1.1.1</hbase.version>
+        <hbase.version>2.3.7</hbase.version>
         <dts.version>4.6.27.12.0</dts.version>
         <commons.lang3.version>3.3.2</commons.lang3.version>
     </properties>
