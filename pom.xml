@@ -19,7 +19,7 @@
         <loghubb.client.version>0.6.13</loghubb.client.version>
         <ons.version>1.7.1.Final</ons.version>
         <rocketmq.version>3.5.9</rocketmq.version>
-        <hadoop.version>2.9.0</hadoop.version>
+        <hadoop.version>2.9.1</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
         <fastjson.version>1.2.45</fastjson.version>
