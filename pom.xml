@@ -22,7 +22,7 @@
         <hadoop.version>2.9.0</hadoop.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <scopt.version>3.2.0</scopt.version>
-        <fastjson.version>1.2.45</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <guava.version>11.0.2</guava.version>
         <mysql.connector.version>5.1.34</mysql.connector.version>
         <mongodb.version>0.11.2</mongodb.version>
