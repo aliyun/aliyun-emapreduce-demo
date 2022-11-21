@@ -127,7 +127,7 @@
         <dependency>
             <groupId>com.aliyun.openservices</groupId>
             <artifactId>aliyun-log</artifactId>
-            <version>0.6.60</version>
+            <version>0.6.66</version>
         </dependency>
 
 
