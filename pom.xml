@@ -11,7 +11,7 @@
     <name>Aliyun E-MapReduce Demo Project</name>
 
     <properties>
-        <spark.version>2.3.1</spark.version>
+        <spark.version>2.4.6</spark.version>
         <flink.version>1.4.0</flink.version>
         <emr.version>2.0.0</emr.version>
         <oss.sdk.version>3.0.0</oss.sdk.version>
@@ -28,7 +28,7 @@
         <mongodb.version>0.11.2</mongodb.version>
         <redis.clients.version>2.7.2</redis.clients.version>
         <commons.pool2.version>2.0</commons.pool2.version>
-        <hbase.version>1.1.1</hbase.version>
+        <hbase.version>2.0.0</hbase.version>
         <dts.version>4.6.27.12.0</dts.version>
         <commons.lang3.version>3.3.2</commons.lang3.version>
     </properties>
@@ -370,7 +370,7 @@
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-hdfs</artifactId>
-            <version>1.1.2</version>
+            <version>2.5.0</version>
         </dependency>
 
         <dependency>
@@ -412,7 +412,7 @@
         <dependency>
             <groupId>com.aliyun.datahub</groupId>
             <artifactId>aliyun-sdk-datahub</artifactId>
-            <version>2.13.0-public</version>
+            <version>2.24.9</version>
         </dependency>
 
         <dependency>
